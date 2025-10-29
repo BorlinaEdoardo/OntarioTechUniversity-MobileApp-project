@@ -20,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RestaurantViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewRestaurantActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

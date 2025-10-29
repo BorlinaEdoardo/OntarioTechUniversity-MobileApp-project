@@ -1,4 +1,4 @@
-package com.test.project
+package com.test.project.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -103,5 +103,26 @@ class DatabaseHelper(
         db?.execSQL("DROP TABLE IF EXISTS restaurants")
         db?.execSQL("DROP TABLE IF EXISTS users")
         onCreate(db)
+    }
+
+    /// Restaurants Table Methods
+
+    // Get all restaurants
+    fun getAllRestaurants(): List<Restaurant> {
+        val restaurants = mutableListOf<Restaurant>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM restaurants", null)
+        while (cursor.moveToNext()) {
+            val restaurant: Restaurant = Restaurant.getFromCursor(cursor)
+            restaurants.add(restaurant)
+        }
+        cursor.close()
+        return restaurants
+    }
+
+    // insert a restaurant
+    fun insertRestaurant(restaurant: Restaurant){
+        val db = writableDatabase
+        db.insert("restaurants", null, restaurant.toContentValues())
     }
 }
