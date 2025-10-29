@@ -46,5 +46,7 @@ class RestaurantViewActivity : AppCompatActivity() {
         super.onResume()
         val databaseVersion = 1
         databaseHelper = DatabaseHelper(this, databaseVersion)
+
+        adapter.submit(databaseHelper.getAllRestaurants())
     }
 }
