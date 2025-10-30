@@ -44,9 +44,9 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
     class RestaurantVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val card: CardView = itemView as CardView
-        private val name: TextView = itemView.findViewById(R.id.nameText)
-        private val address: TextView = itemView.findViewById(R.id.addressText)
-        private val phoneNumber: TextView = itemView.findViewById(R.id.phoneText)
+        private val name: TextView = itemView.findViewById(R.id.restaurantName)
+        private val address: TextView = itemView.findViewById(R.id.restaurantAddress)
+        private val phoneNumber: TextView = itemView.findViewById(R.id.restaurantPhone)
 
         fun bind(restaurant: Restaurant) {
             name.text = restaurant.name

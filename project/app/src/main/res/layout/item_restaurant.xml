@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:elevation="4dp"
-    android:fillViewport="true"
-    android:background="@drawable/restaurant_border">
+    android:fillViewport="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/restaurant_border">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,6 +51,7 @@
 
         <!-- Address -->
         <TextView
+            android:id="@+id/restaurantAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Address Placeholder"
@@ -55,6 +62,7 @@
 
         <!-- Phone Number -->
         <TextView
+            android:id="@+id/restaurantPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Phone Number Placeholder"
@@ -85,4 +93,5 @@
             android:textColor="#333333"
             android:layout_marginTop="4dp"/>
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.cardview.widget.CardView>
