@@ -31,7 +31,10 @@ class DatabaseHelper(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 address TEXT NOT NULL,
-                phoneNumber TEXT NOT NULL
+                phoneNumber TEXT NOT NULL,
+                description TEXT,
+                shortDescription TEXT,
+                rating REAL
             )
         """)
 

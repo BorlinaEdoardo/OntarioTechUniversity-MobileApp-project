@@ -40,7 +40,7 @@
 
         <!-- Restaurant Description -->
         <TextView
-            android:id="@+id/restaurantDescription"
+            android:id="@+id/restaurantShortDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Short description or cuisine type"
@@ -84,7 +84,7 @@
 
         <!-- Long paragraph (about the restaurant) -->
         <TextView
-            android:id="@+id/restaurantLongText"
+            android:id="@+id/restaurantDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Here’s a long paragraph about the restaurant. It can describe the atmosphere, specialties, hours, and history of the place. You can write multiple paragraphs here and it will scroll as needed."
