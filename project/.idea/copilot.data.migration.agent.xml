@@ -10,10 +10,19 @@
           <value>
             <set>
               <option value="addcb8a9-5359-4119-8c2e-cfd9d0041c65" />
+              <option value="acc0aac0-5241-416d-b277-404a887e4223" />
             </set>
           </value>
         </entry>
       </map>
     </option>
+    <pendingWorkingSetItems>
+      <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4">
+        <set>
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/NewRestaurantActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_new_restaurant.xml" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
   </component>
 </project>
