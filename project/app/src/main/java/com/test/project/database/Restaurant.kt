@@ -11,6 +11,8 @@ data class Restaurant(
     val rating: Float? = 4.5f,
     val address: String,
     val phoneNumber: String,
+    val lat: Double = 0.0,
+    val lng: Double = 0.0
 ){
     fun toContentValues(): ContentValues{
         return ContentValues().apply {
