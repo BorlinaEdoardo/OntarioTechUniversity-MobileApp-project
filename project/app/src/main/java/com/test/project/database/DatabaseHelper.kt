@@ -95,10 +95,14 @@ class DatabaseHelper(
             )
         """)
 
+        // Insert premade restaurants for Oshawa (Toronto area)
+        insertPremadeRestaurants(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        // Drop all tables and recreate them
+        insertPremadeRestaurants(db)
+        // For major version changes, drop and recreate
+        db?.execSQL("DROP TABLE IF EXISTS menu_elements")
         db?.execSQL("DROP TABLE IF EXISTS reviews")
         db?.execSQL("DROP TABLE IF EXISTS order_elements")
         db?.execSQL("DROP TABLE IF EXISTS orders")
@@ -106,6 +110,58 @@ class DatabaseHelper(
         db?.execSQL("DROP TABLE IF EXISTS restaurants")
         db?.execSQL("DROP TABLE IF EXISTS users")
         onCreate(db)
+
+
+    }
+
+    // Insert premade restaurants for Oshawa (Toronto area)
+    private fun insertPremadeRestaurants(db: SQLiteDatabase?) {
+        val restaurants = listOf(
+            Restaurant(
+                name = "Symposium Cafe Restaurant & Lounge",
+                description = "A vibrant restaurant and lounge offering contemporary Canadian cuisine with international influences. Known for their extensive menu featuring everything from pasta and steaks to fresh salads and creative desserts. The atmosphere is warm and welcoming, perfect for both casual dining and special occasions.",
+                shortDescription = "Contemporary Canadian cuisine",
+                rating = 4.2f,
+                address = "1300 King St E, Oshawa, ON L1H 8J4",
+                phoneNumber = "(905) 436-3354"
+            ),
+            Restaurant(
+                name = "The Keg Oshawa",
+                description = "A classic steakhouse chain known for their premium steaks, fresh seafood, and signature caesar salads. The Keg offers a sophisticated dining experience with their dark wood decor and comfortable atmosphere. Their menu features AAA grade steaks, lobster, and an extensive wine selection.",
+                shortDescription = "Premium steakhouse",
+                rating = 4.4f,
+                address = "1200 Thornton Rd N, Oshawa, ON L1H 7K4",
+                phoneNumber = "(905) 433-3700"
+            ),
+            Restaurant(
+                name = "Fazio's Italian Restaurant",
+                description = "Family-owned authentic Italian restaurant serving traditional recipes passed down through generations. Features homemade pasta, wood-fired pizza, and classic Italian entrees. The cozy atmosphere and friendly service make it feel like dining at an Italian family's home.",
+                shortDescription = "Authentic Italian family dining",
+                rating = 4.6f,
+                address = "1668 Simcoe St N, Oshawa, ON L1G 4X6",
+                phoneNumber = "(905) 436-3287"
+            ),
+            Restaurant(
+                name = "Sushi Masa Japanese Restaurant",
+                description = "Fresh and authentic Japanese cuisine featuring expertly crafted sushi, sashimi, and traditional Japanese dishes. The chef uses only the finest ingredients to create beautiful presentations. The minimalist decor creates a peaceful dining environment perfect for enjoying the artistry of Japanese cuisine.",
+                shortDescription = "Fresh authentic Japanese sushi",
+                rating = 4.5f,
+                address = "1300 King St E Unit 3, Oshawa, ON L1H 8J4",
+                phoneNumber = "(905) 240-0888"
+            ),
+            Restaurant(
+                name = "Oshawa House Restaurant",
+                description = "A local landmark serving comfort food and traditional favorites for over 30 years. Known for their generous portions, friendly service, and classic diner atmosphere. Popular for breakfast all day, hearty burgers, and homestyle dinners that remind you of home cooking.",
+                shortDescription = "Classic comfort food diner",
+                rating = 4.1f,
+                address = "1425 King St E, Oshawa, ON L1H 8J6",
+                phoneNumber = "(905) 579-4449"
+            )
+        )
+
+        restaurants.forEach { restaurant ->
+            db?.insert("restaurants", null, restaurant.toContentValues())
+        }
     }
 
     /// Restaurants Table Methods

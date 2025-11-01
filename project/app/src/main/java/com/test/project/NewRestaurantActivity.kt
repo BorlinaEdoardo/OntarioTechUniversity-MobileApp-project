@@ -35,7 +35,7 @@ class NewRestaurantActivity : AppCompatActivity() {
         btnCancel = findViewById(R.id.btnCancel)
 
         // Initialize database helper
-        val databaseVersion = 2
+        val databaseVersion = 3
         databaseHelper = DatabaseHelper(this, databaseVersion)
 
         // Set up button listeners
