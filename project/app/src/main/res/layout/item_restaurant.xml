@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="4dp"
     android:fillViewport="true">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/restaurant_border">
 
 
@@ -85,13 +85,14 @@
         <!-- Long paragraph (about the restaurant) -->
         <TextView
             android:id="@+id/restaurantDescription"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Here’s a long paragraph about the restaurant. It can describe the atmosphere, specialties, hours, and history of the place. You can write multiple paragraphs here and it will scroll as needed."
             android:textSize="15sp"
             android:lineSpacingExtra="4dp"
             android:textColor="#333333"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"/>
     </LinearLayout>
     </ScrollView>
 </androidx.cardview.widget.CardView>
