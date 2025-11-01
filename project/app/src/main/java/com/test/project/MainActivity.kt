@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.test.project.database.DatabaseHelper
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val text: TextView = findViewById(R.id.textView)
+        val btn1: Button = findViewById(R.id.button1)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity() {
             val intent = android.content.Intent(this, RestaurantViewActivity::class.java)
             startActivity(intent)
 
+        }
+
+        btn1.setOnClickListener {
+            val intent = android.content.Intent(this, MapActivity::class.java)
+            startActivity(intent)
         }
 
     }
