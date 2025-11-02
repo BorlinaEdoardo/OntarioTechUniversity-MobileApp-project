@@ -29,6 +29,7 @@
         app:layout_anchor="@id/topAppBar"
         app:layout_anchorGravity="bottom">
 
+        <!-- Image Placeholder -->
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"

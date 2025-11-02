@@ -10,6 +10,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Page Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
+        <!-- Enter Restaurant Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +35,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Enter Restaurant Address -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +50,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Enter Restaurant Address -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +65,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Enter Short Description for Restaurant -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -76,6 +81,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Enter a Longer Description for Restaurant -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +98,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Enter the Restaurant's Rating -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,6 +120,7 @@
             android:orientation="horizontal"
             android:gravity="center">
 
+            <!-- Cancel Button -->
             <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
@@ -121,6 +129,7 @@
                 android:text="Cancel"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
+            <!-- Save Button -->
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"

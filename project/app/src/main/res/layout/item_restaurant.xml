@@ -11,88 +11,85 @@
         android:layout_height="wrap_content"
         android:background="@drawable/restaurant_border">
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
-
-        <!-- Restaurant Image -->
-        <ImageView
-            android:id="@+id/restaurantImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop" />
-        <!-- Enter Image here with src -->
-
-        <!-- Restaurant Name -->
-        <TextView
-            android:id="@+id/restaurantName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Restaurant Name"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#212121"
-            android:layout_marginTop="8dp" />
+            android:orientation="vertical"
+            android:padding="12dp">
 
-        <!-- Restaurant Description -->
-        <TextView
-            android:id="@+id/restaurantShortDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Short description or cuisine type"
-            android:textSize="15sp"
-            android:textColor="#757575"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp" />
+            <!-- Restaurant Image -->
+            <ImageView
+                android:id="@+id/restaurantImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
 
-        <!-- Address -->
-        <TextView
-            android:id="@+id/restaurantAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address Placeholder"
-            android:textSize="13sp"
-            android:textColor="#757575"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"/>
+                <!-- Restaurant Name -->
+                <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Name"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#212121"
+                android:layout_marginTop="8dp" />
 
-        <!-- Phone Number -->
-        <TextView
-            android:id="@+id/restaurantPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Phone Number Placeholder"
-            android:textSize="13sp"
-            android:textColor="#757575"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"/>
+            <!-- Restaurant Description -->
+            <TextView
+                android:id="@+id/restaurantShortDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Short description or cuisine type"
+                android:textSize="15sp"
+                android:textColor="#757575"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp" />
 
-        <!-- Rating -->
-        <RatingBar
-            android:id="@+id/restaurantRating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="4.5"
-            android:isIndicator="true"
-            android:layout_marginBottom="8dp" />
+            <!-- Address -->
+            <TextView
+                android:id="@+id/restaurantAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address Placeholder"
+                android:textSize="13sp"
+                android:textColor="#757575"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"/>
 
-        <!-- Long paragraph (about the restaurant) -->
-        <TextView
-            android:id="@+id/restaurantDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Here’s a long paragraph about the restaurant. It can describe the atmosphere, specialties, hours, and history of the place. You can write multiple paragraphs here and it will scroll as needed."
-            android:textSize="15sp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="#333333"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
-    </LinearLayout>
+            <!-- Phone Number -->
+            <TextView
+                android:id="@+id/restaurantPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone Number Placeholder"
+                android:textSize="13sp"
+                android:textColor="#757575"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Rating -->
+            <RatingBar
+                android:id="@+id/restaurantRating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4.5"
+                android:isIndicator="true"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Long paragraph about the restaurant -->
+            <TextView
+                android:id="@+id/restaurantDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Here’s a long paragraph about the restaurant. It can describe the atmosphere, specialties, hours, and history of the place. You can write multiple paragraphs here and it will scroll as needed."
+                android:textSize="15sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#333333"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"/>
+        </LinearLayout>
     </ScrollView>
 </androidx.cardview.widget.CardView>

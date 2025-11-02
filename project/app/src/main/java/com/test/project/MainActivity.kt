@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // defining variables
         val text: TextView = findViewById(R.id.textView)
         val btn1: Button = findViewById(R.id.button1)
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // make the button send the user to the map
         btn1.setOnClickListener {
             val intent = android.content.Intent(this, MapActivity::class.java)
             startActivity(intent)
