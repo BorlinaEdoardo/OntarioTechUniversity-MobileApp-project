@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.test.project.database.DatabaseHelper
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +18,9 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        // defining variables
         val text: TextView = findViewById(R.id.textView)
+        val btn1: Button = findViewById(R.id.button1)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -32,11 +35,17 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        // make the button send the user to the map
+        btn1.setOnClickListener {
+            val intent = android.content.Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
-        val databaseVersion = 1
+        val databaseVersion = 3
         databaseHelper = DatabaseHelper(this, databaseVersion)
     }
 }

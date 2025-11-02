@@ -3,6 +3,7 @@ package com.test.project
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -44,14 +45,20 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
     class RestaurantVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val card: CardView = itemView as CardView
-        private val name: TextView = itemView.findViewById(R.id.nameText)
-        private val address: TextView = itemView.findViewById(R.id.addressText)
-        private val phoneNumber: TextView = itemView.findViewById(R.id.phoneText)
+        private val name: TextView = itemView.findViewById(R.id.restaurantName)
+        private val address: TextView = itemView.findViewById(R.id.restaurantAddress)
+        private val phoneNumber: TextView = itemView.findViewById(R.id.restaurantPhone)
+        private val description: TextView = itemView.findViewById(R.id.restaurantDescription)
+        private val rating: RatingBar = itemView.findViewById(R.id.restaurantRating)
+        private val shortDescription: TextView = itemView.findViewById(R.id.restaurantShortDescription)
 
         fun bind(restaurant: Restaurant) {
             name.text = restaurant.name
             address.text = restaurant.address ?: ""
             phoneNumber.text = restaurant.phoneNumber ?: ""
+            description.text = restaurant.description ?: "No description available"
+            rating.rating = restaurant.rating ?: 4.5f
+            shortDescription.text = restaurant.shortDescription ?: "No short description available"
 
 
             card.setCardBackgroundColor(android.graphics.Color.WHITE)

@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AgentMigrationStateService">
-    <option name="migrationStatus" value="COMPLETED" />
+    <option name="migrationStatus" value="IN_PROGRESS" />
+    <option name="pendingSessionIds">
+      <option value="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8" />
+      <option value="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
+          <value>
+            <set>
+              <option value="55aca440-5cc4-4467-aecd-23740c66d980" />
+            </set>
+          </value>
+        </entry>
+        <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4">
+          <value>
+            <set>
+              <option value="acc0aac0-5241-416d-b277-404a887e4223" />
+              <option value="addcb8a9-5359-4119-8c2e-cfd9d0041c65" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
+        <set>
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/MainActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/NewRestaurantActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt" />
+        </set>
+      </entry>
+      <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
+    </pendingWorkingSetItems>
   </component>
 </project>

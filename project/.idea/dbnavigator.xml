@@ -7,12 +7,6 @@
   <component name="DBNavigator.Project.DatabaseAssistantManager">
     <assistants />
   </component>
-  <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
-    <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
-    <loaded-nodes />
-  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="14619dd6-2985-41fd-876d-ae7cc98aa096">
       <console name="Connection" type="STANDARD" schema="main" session="Main" />
@@ -26,9 +20,6 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
-  </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />

@@ -6,14 +6,22 @@ import android.database.Cursor
 data class Restaurant(
     val id: Int? = null,
     val name: String,
+    val description: String? = "Short description not available",
+    val shortDescription: String? = "Description not available",
+    val rating: Float? = 4.5f,
     val address: String,
     val phoneNumber: String,
+    val lat: Double = 0.0,
+    val lng: Double = 0.0
 ){
     fun toContentValues(): ContentValues{
         return ContentValues().apply {
             put("name", name)
             put("address", address)
             put("phoneNumber", phoneNumber)
+            put("description", description)
+            put("shortDescription", shortDescription)
+            put("rating", rating)
         }
     }
 
@@ -24,7 +32,11 @@ data class Restaurant(
             val name = cursor.getString(cursor.getColumnIndexOrThrow("name"))
             val address = cursor.getString(cursor.getColumnIndexOrThrow("address"))
             val phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow("phoneNumber"))
-            return Restaurant(id, name, address, phoneNumber)
+            val description = cursor.getString(cursor.getColumnIndexOrThrow("description"))
+            val shortDescription = cursor.getString(cursor.getColumnIndexOrThrow("shortDescription"))
+            val rating = cursor.getFloat(cursor.getColumnIndexOrThrow("rating"))
+
+            return Restaurant(id, name, description, shortDescription, rating, address, phoneNumber)
         }
     }
 
