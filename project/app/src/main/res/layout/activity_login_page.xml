@@ -19,9 +19,9 @@
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:src="@drawable/icon_account_circle"
-            />
+            android:src="@drawable/icon_account_circle" />
 
+        <!-- Text field for username -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,6 +35,7 @@
             android:inputType="text"
             android:id="@+id/username_input"/>
 
+        <!-- Text field for password -->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
             android:inputType="textPassword"
             android:id="@+id/password_input"/>
 
+        <!-- Login button -->
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
