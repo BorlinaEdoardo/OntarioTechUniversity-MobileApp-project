@@ -1,7 +1,7 @@
 # OTU Mobile App Project - Restaurant Viewing App
-**_Last updated: Nov. 2, 2025 @ 5:40PM (EST)_**
+**_Last updated: Nov. 2, 2025 @ 6:25PM (EST)_**
 
-This repository contains working code of our restaurant-viewing app that displays information about many restaurants, and displays them in a user-friendly way to understand and learn more about to help users see what is available around them.
+This repository contains working code of our restaurant-viewing app that displays information about multiple restaurants, and displays them in a user-friendly way to understand to help users see what is available around them and what each unique restaurant provides.
 
 ## Authors
 
@@ -16,3 +16,4 @@ This repository contains working code of our restaurant-viewing app that display
 - Home page UI
 - An "Add Restaurant" page UI
 - Implemented Database that holds restaurant information
+
