@@ -1,98 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="4dp"
-    android:fillViewport="true">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/restaurant_border">
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:layout_height="wrap_content">
 
         <!-- Restaurant Image -->
         <ImageView
             android:id="@+id/restaurantImage"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="200dp"
-            android:scaleType="centerCrop" />
-        <!-- Enter Image here with src -->
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_restaurant"
+            android:contentDescription="Restaurant image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Restaurant Name -->
-        <TextView
-            android:id="@+id/restaurantName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Restaurant Name"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#212121"
-            android:layout_marginTop="8dp" />
+        <!-- Gradient Overlay for better icon visibility -->
+        <View
+            android:id="@+id/gradientOverlay"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/gradient_overlay_top"
+            app:layout_constraintTop_toTopOf="@id/restaurantImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Restaurant Description -->
-        <TextView
-            android:id="@+id/restaurantShortDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Short description or cuisine type"
-            android:textSize="15sp"
-            android:textColor="#757575"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp" />
+        <!-- Favorite Button -->
+        <ImageButton
+            android:id="@+id/favoriteButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/favorite_button_bg"
+            android:src="@drawable/ic_heart_outline"
+            android:contentDescription="Add to favorites"
+            android:scaleType="centerInside"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Address -->
-        <TextView
-            android:id="@+id/restaurantAddress"
-            android:layout_width="match_parent"
+        <!-- Content Container: linear layout inside the card to organize text -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Address Placeholder"
-            android:textSize="13sp"
-            android:textColor="#757575"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"/>
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/restaurantImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Phone Number -->
-        <TextView
-            android:id="@+id/restaurantPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Phone Number Placeholder"
-            android:textSize="13sp"
-            android:textColor="#757575"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="8dp"/>
+            <!-- Restaurant Name -->
+            <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Name"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#1A1A1A"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
-        <!-- Rating -->
-        <RatingBar
-            android:id="@+id/restaurantRating"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:rating="4.5"
-            android:isIndicator="true"
-            android:layout_marginBottom="8dp" />
+            <!-- Rating and Cuisine Type Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical">
 
-        <!-- Long paragraph (about the restaurant) -->
-        <TextView
-            android:id="@+id/restaurantDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Here’s a long paragraph about the restaurant. It can describe the atmosphere, specialties, hours, and history of the place. You can write multiple paragraphs here and it will scroll as needed."
-            android:textSize="15sp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="#333333"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"/>
-    </LinearLayout>
-    </ScrollView>
-</androidx.cardview.widget.CardView>
+                <!-- Rating -->
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/star_on"
+                    android:contentDescription="Star rating"
+                    app:tint="#FFC107" />
+
+                <TextView
+                    android:id="@+id/restaurantRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="4.5"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="•"
+                    android:textColor="#6B6B6B"
+                    android:textSize="14sp" />
+
+                <!-- Cuisine Type -->
+                <TextView
+                    android:id="@+id/restaurantCuisine"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Italian • Pizza"
+                    android:textSize="14sp"
+                    android:textColor="#6B6B6B"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
