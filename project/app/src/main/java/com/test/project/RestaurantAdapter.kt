@@ -3,7 +3,8 @@ package com.test.project
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -45,29 +46,36 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
     class RestaurantVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val card: CardView = itemView as CardView
+        private val image: ImageView = itemView.findViewById(R.id.restaurantImage)
+        private val favoriteButton: ImageButton = itemView.findViewById(R.id.favoriteButton)
         private val name: TextView = itemView.findViewById(R.id.restaurantName)
-        private val address: TextView = itemView.findViewById(R.id.restaurantAddress)
-        private val phoneNumber: TextView = itemView.findViewById(R.id.restaurantPhone)
-        private val description: TextView = itemView.findViewById(R.id.restaurantDescription)
-        private val rating: RatingBar = itemView.findViewById(R.id.restaurantRating)
-        private val shortDescription: TextView = itemView.findViewById(R.id.restaurantShortDescription)
+        private val rating: TextView = itemView.findViewById(R.id.restaurantRating)
+        private val cuisine: TextView = itemView.findViewById(R.id.restaurantCuisine)
 
         fun bind(restaurant: Restaurant) {
             name.text = restaurant.name
-            address.text = restaurant.address ?: ""
-            phoneNumber.text = restaurant.phoneNumber ?: ""
-            description.text = restaurant.description ?: "No description available"
-            rating.rating = restaurant.rating ?: 4.5f
-            shortDescription.text = restaurant.shortDescription ?: "No short description available"
+            rating.text = String.format("%.1f", restaurant.rating ?: 4.5f)
+            cuisine.text = restaurant.shortDescription ?: "Restaurant"
+
+            // Set sample image (same for all restaurants for now)
+            image.setImageResource(R.drawable.sample_restaurant)
+
+            // Handle favorite button click
+            var isFavorite = false
+            favoriteButton.setOnClickListener {
+                isFavorite = !isFavorite
+                if (isFavorite) {
+                    favoriteButton.setImageResource(R.drawable.ic_heart_filled)
+                } else {
+                    favoriteButton.setImageResource(R.drawable.ic_heart_outline)
+                }
+            }
 
 
-            card.setCardBackgroundColor(android.graphics.Color.WHITE)
-
-
-            name.setTextColor(android.graphics.Color.BLACK)
-            address.setTextColor(android.graphics.Color.DKGRAY)
-            phoneNumber.setTextColor(android.graphics.Color.DKGRAY)
+            card.setOnClickListener {
+                // TODO: Navigate to detail screen or show dialog with:
+                // restaurant.address, restaurant.phoneNumber, restaurant.description
+            }
         }
     }
-
 }
