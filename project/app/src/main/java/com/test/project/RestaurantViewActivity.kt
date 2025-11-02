@@ -19,7 +19,6 @@ class RestaurantViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant_view)
 
-        val addTaskBtn: Button = findViewById(R.id.addTaskBtn)
         val searchBox: EditText = findViewById(R.id.search_bar)
         val rv: RecyclerView = findViewById(R.id.recyclerView)
 
@@ -27,9 +26,9 @@ class RestaurantViewActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
-        addTaskBtn.setOnClickListener {
-            startActivity(Intent(this, NewRestaurantActivity::class.java))
-        }
+      //  addTaskBtn.setOnClickListener {
+      //      startActivity(Intent(this, NewRestaurantActivity::class.java))
+        //}
 
         searchBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

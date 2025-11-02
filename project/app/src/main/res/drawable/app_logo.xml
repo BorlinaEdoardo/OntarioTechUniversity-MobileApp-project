@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="40"
+    android:viewportHeight="40">
+    <path
+        android:fillColor="#FF6B35"
+        android:pathData="M20,4C11.16,4 4,11.16 4,20s7.16,16 16,16 16,-7.16 16,-16S28.84,4 20,4zM20,30c-5.52,0 -10,-4.48 -10,-10s4.48,-10 10,-10 10,4.48 10,10 -4.48,10 -10,10z" />
+    />
+</vector>
+
+<!-- PLACEHOLDER :) -->
