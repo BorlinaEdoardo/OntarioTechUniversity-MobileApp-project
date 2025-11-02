@@ -73,8 +73,9 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
 
             card.setOnClickListener {
-                // TODO: Navigate to detail screen or show dialog with:
-                // restaurant.address, restaurant.phoneNumber, restaurant.description
+                // TODO: Navigate to detail screen with:
+                // restaurant description, video presentation, images, review section, etc.
+
             }
         }
     }
