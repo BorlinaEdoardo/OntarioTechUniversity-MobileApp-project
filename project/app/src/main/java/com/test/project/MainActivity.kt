@@ -1,13 +1,13 @@
 package com.test.project
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.test.project.database.DatabaseHelper
-import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         val text: TextView = findViewById(R.id.textView)
         val btn1: Button = findViewById(R.id.button1)
 
+        val loginPage: Button = findViewById(R.id.login_page_button)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -32,7 +34,12 @@ class MainActivity : AppCompatActivity() {
         text.setOnClickListener {
             val intent = android.content.Intent(this, RestaurantViewActivity::class.java)
             startActivity(intent)
+        }
 
+        //Click Listener for button to navigate to Login Page
+        loginPage.setOnClickListener {
+            val intent = android.content.Intent(this, LoginPageActivity::class.java)
+            startActivity(intent)
         }
 
         // make the button send the user to the map
@@ -41,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
+        }
 
     override fun onResume() {
         super.onResume()
