@@ -29,6 +29,9 @@ class LoginPageActivity : AppCompatActivity()
             val username = usernameInput.text.toString();
             val password = passwordInput.text.toString();
             Log.i("Test Login Credentials", "Username: $username and Password : $password")
+
+            val intent = android.content.Intent(this, RestaurantViewActivity::class.java)
+            startActivity(intent)
         }
     }
 }
