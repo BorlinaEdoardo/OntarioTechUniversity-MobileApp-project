@@ -95,8 +95,6 @@ class DatabaseHelper(
             )
         """)
 
-        // Insert premade restaurants for Oshawa (Toronto area)
-        insertPremadeRestaurants(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -114,7 +112,7 @@ class DatabaseHelper(
 
     }
 
-    // Insert premade restaurants for Oshawa (Toronto area)
+    // example restaurants
     private fun insertPremadeRestaurants(db: SQLiteDatabase?) {
         val restaurants = listOf(
             Restaurant(
