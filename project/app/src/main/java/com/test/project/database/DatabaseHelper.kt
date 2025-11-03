@@ -109,7 +109,7 @@ class DatabaseHelper(
         db?.execSQL("DROP TABLE IF EXISTS users")
         onCreate(db)
 
-
+        insertPremadeRestaurants(db)
     }
 
     // example restaurants
