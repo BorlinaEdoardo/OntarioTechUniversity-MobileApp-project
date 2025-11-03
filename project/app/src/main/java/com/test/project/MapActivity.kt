@@ -14,7 +14,7 @@ class MapActivity : AppCompatActivity() {
         // Back button functionality
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
         topAppBar.setNavigationOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, RestaurantViewActivity::class.java)
             startActivity(intent)
             finish()
         }

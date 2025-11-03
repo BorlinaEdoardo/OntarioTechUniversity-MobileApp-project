@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,8 @@ class RestaurantViewActivity : AppCompatActivity() {
 
         val searchBox: EditText = findViewById(R.id.search_bar)
         val rv: RecyclerView = findViewById(R.id.recyclerView)
+        val mapbtn: ImageButton = findViewById(R.id.btnMap)
+        val logbtn: ImageButton = findViewById(R.id.btnAccount)
 
         adapter = RestaurantAdapter()
         rv.layoutManager = LinearLayoutManager(this)
@@ -29,6 +32,16 @@ class RestaurantViewActivity : AppCompatActivity() {
       //  addTaskBtn.setOnClickListener {
       //      startActivity(Intent(this, NewRestaurantActivity::class.java))
         //}
+
+        mapbtn.setOnClickListener {
+            val intent = android.content.Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+
+        logbtn.setOnClickListener {
+            val intent = android.content.Intent(this, LoginPageActivity::class.java)
+            startActivity(intent)
+        }
 
         searchBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

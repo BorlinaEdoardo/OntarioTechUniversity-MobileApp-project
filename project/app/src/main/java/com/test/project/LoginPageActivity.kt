@@ -32,6 +32,7 @@ class LoginPageActivity : AppCompatActivity()
 
             val intent = android.content.Intent(this, RestaurantViewActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
