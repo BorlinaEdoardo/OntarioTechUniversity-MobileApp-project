@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.project.database.DatabaseHelper
 
+
+
 class RestaurantViewActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var adapter: RestaurantAdapter
+    private lateinit var addTaskBtn: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +30,10 @@ class RestaurantViewActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
-      //  addTaskBtn.setOnClickListener {
-      //      startActivity(Intent(this, NewRestaurantActivity::class.java))
-        //}
+         addTaskBtn.setOnClickListener {
+             startActivity(Intent(this, NewRestaurantActivity::class.java))
+         }
+
 
         searchBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
