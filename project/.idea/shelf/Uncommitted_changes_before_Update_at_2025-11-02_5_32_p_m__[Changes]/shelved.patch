@@ -1,0 +1,143 @@
+Index: app/src/main/java/com/test/project/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.test.project\r\n\r\nimport android.os.Bundle\r\nimport android.widget.TextView\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.view.ViewCompat\r\nimport androidx.core.view.WindowInsetsCompat\r\nimport com.test.project.database.DatabaseHelper\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    private lateinit var databaseHelper: DatabaseHelper\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n        setContentView(R.layout.activity_main)\r\n\r\n        val text: TextView = findViewById(R.id.textView)\r\n\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->\r\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\r\n            insets\r\n        }\r\n\r\n        // make a click listener for the text view that navigate to RestaurantViewActivity\r\n        text.setOnClickListener {\r\n            val intent = android.content.Intent(this, RestaurantViewActivity::class.java)\r\n            startActivity(intent)\r\n\r\n        }\r\n\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        val databaseVersion = 1\r\n        databaseHelper = DatabaseHelper(this, databaseVersion)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/test/project/MainActivity.kt b/app/src/main/java/com/test/project/MainActivity.kt
+--- a/app/src/main/java/com/test/project/MainActivity.kt	(revision 67c2441ed3c51d705a9bf311140f2d4ee81f4070)
++++ b/app/src/main/java/com/test/project/MainActivity.kt	(date 1762122543285)
+@@ -1,6 +1,7 @@
+ package com.test.project
+ 
+ import android.os.Bundle
++import android.widget.Button
+ import android.widget.TextView
+ import androidx.activity.enableEdgeToEdge
+ import androidx.appcompat.app.AppCompatActivity
+@@ -19,6 +20,8 @@
+ 
+         val text: TextView = findViewById(R.id.textView)
+ 
++        val loginPage: Button = findViewById(R.id.login_page_button)
++
+         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+@@ -29,8 +32,15 @@
+         text.setOnClickListener {
+             val intent = android.content.Intent(this, RestaurantViewActivity::class.java)
+             startActivity(intent)
++        }
++
++        //Click Listener for button to navigate to Login Page
++        loginPage.setOnClickListener {
++            val intent = android.content.Intent(this, LoginPageActivity::class.java)
++            startActivity(intent)
++        }
+ 
+-        }
++
+ 
+     }
+ 
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Click me!\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 67c2441ed3c51d705a9bf311140f2d4ee81f4070)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1762122543265)
+@@ -17,4 +17,16 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
++    <Button
++        android:id="@+id/login_page_button"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="Login Page"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintVertical_bias="0.751" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/test/project/LoginPageActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.test.project\r\n\r\nimport android.os.Bundle\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.view.ViewCompat\r\nimport androidx.core.view.WindowInsetsCompat\r\n\r\nclass LoginPageActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n        setContentView(R.layout.activity_login_page)\r\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->\r\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\r\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\r\n            insets\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/test/project/LoginPageActivity.kt b/app/src/main/java/com/test/project/LoginPageActivity.kt
+--- a/app/src/main/java/com/test/project/LoginPageActivity.kt	(revision 67c2441ed3c51d705a9bf311140f2d4ee81f4070)
++++ b/app/src/main/java/com/test/project/LoginPageActivity.kt	(date 1762122120333)
+@@ -1,20 +1,34 @@
+ package com.test.project
+ 
+ import android.os.Bundle
++import android.util.Log
++import android.widget.Button
++import android.widget.EditText
+ import androidx.activity.enableEdgeToEdge
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.core.view.ViewCompat
+ import androidx.core.view.WindowInsetsCompat
+ 
+-class LoginPageActivity : AppCompatActivity() {
+-    override fun onCreate(savedInstanceState: Bundle?) {
++class LoginPageActivity : AppCompatActivity()
++{
++    lateinit var usernameInput : EditText
++    lateinit var passwordInput : EditText
++    lateinit var loginBtn : Button
++
++    override fun onCreate(savedInstanceState: Bundle?)
++    {
+         super.onCreate(savedInstanceState)
+-        enableEdgeToEdge()
+         setContentView(R.layout.activity_login_page)
+-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+-            insets
++
++        usernameInput = findViewById(R.id.username_input)
++        passwordInput = findViewById(R.id.password_input)
++        loginBtn = findViewById(R.id.login_button)
++
++        loginBtn.setOnClickListener()
++        {
++            val username = usernameInput.text.toString();
++            val password = passwordInput.text.toString();
++            Log.i("Test Login Credentials", "Username: $username and Password : $password")
+         }
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/drawable/login_background.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<shape xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n        <gradient android:type=\"linear\" android:angle=\"100\"\r\n            android:startColor=\"#FF7777\" android:endColor=\"#B9F4A8\"/>\r\n</shape>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/login_background.xml b/app/src/main/res/drawable/login_background.xml
+--- a/app/src/main/res/drawable/login_background.xml	(revision 67c2441ed3c51d705a9bf311140f2d4ee81f4070)
++++ b/app/src/main/res/drawable/login_background.xml	(date 1762120257428)
+@@ -2,5 +2,5 @@
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+         <gradient android:type="linear" android:angle="100"
+-            android:startColor="#FF7777" android:endColor="#B9F4A8"/>
++            android:startColor="#77A0FF" android:endColor="#A8F4AD"/>
+ </shape>
+\ No newline at end of file
