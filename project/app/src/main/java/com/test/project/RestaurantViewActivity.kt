@@ -12,13 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.project.database.DatabaseHelper
 
-
-
 class RestaurantViewActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var adapter: RestaurantAdapter
-    private lateinit var addTaskBtn: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +24,15 @@ class RestaurantViewActivity : AppCompatActivity() {
         val rv: RecyclerView = findViewById(R.id.recyclerView)
         val mapbtn: ImageButton = findViewById(R.id.btnMap)
         val logbtn: ImageButton = findViewById(R.id.btnAccount)
+        val addbtn: ImageButton = findViewById(R.id.addTaskBtn)
 
         adapter = RestaurantAdapter()
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
-         addTaskBtn.setOnClickListener {
-             startActivity(Intent(this, NewRestaurantActivity::class.java))
-         }
-
+      addbtn.setOnClickListener {
+            startActivity(Intent(this, NewRestaurantActivity::class.java))
+        }
 
         mapbtn.setOnClickListener {
             val intent = android.content.Intent(this, MapActivity::class.java)
