@@ -154,6 +154,16 @@
                 android:textColorHint="#999999"
                 android:textSize="16sp" />
 
+            <ImageButton
+                android:id="@+id/voiceSearchBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_mic"
+                android:contentDescription="Mic icon"
+                app:tint="#757575"
+                />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // make the button send the user to the map
+        // button send the user to the map
         btn1.setOnClickListener {
             val intent = android.content.Intent(this, MapActivity::class.java)
             startActivity(intent)
