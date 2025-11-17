@@ -1,7 +1,7 @@
 package com.test.project.database
 
 data class Dish(
-    val id: Int,
+    val id: Int? = null,
     val name: String,
     val description: String,
     val price: Double,

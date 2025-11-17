@@ -96,6 +96,7 @@ class DatabaseHelper(
         """)
 
         insertPremadeRestaurants(db)
+        insertPremadeDishes(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -111,6 +112,77 @@ class DatabaseHelper(
         onCreate(db)
 
         insertPremadeRestaurants(db)
+    }
+
+
+    // example dishes
+    private  fun insertPremadeDishes(db: SQLiteDatabase?) {
+        val dishes = listOf(
+            Dish(
+                name = "Margherita Pizza",
+                description = "Classic pizza with tomato sauce, mozzarella cheese, and fresh basil",
+                price = 12.50
+            ),
+            Dish(
+                name = "Spaghetti Carbonara",
+                description = "Traditional Italian pasta with eggs, cheese, pancetta, and black pepper",
+                price = 14.00
+            ),
+            Dish(
+                name = "Caesar Salad",
+                description = "Fresh romaine lettuce, parmesan cheese, croutons with caesar dressing",
+                price = 9.50
+            ),
+            Dish(
+                name = "Grilled Salmon",
+                description = "Fresh salmon fillet grilled to perfection with lemon and herbs",
+                price = 18.00
+            ),
+            Dish(
+                name = "Tiramisu",
+                description = "Classic Italian dessert with coffee-soaked ladyfingers and mascarpone",
+                price = 6.50
+            ),
+            Dish(
+                name = "Bruschetta",
+                description = "Grilled bread topped with fresh tomatoes, garlic, and basil",
+                price = 7.00
+            ),
+            Dish(
+                name = "Risotto ai Funghi",
+                description = "Creamy rice dish with mixed mushrooms and parmesan cheese",
+                price = 15.50
+            ),
+            Dish(
+                name = "Gelato",
+                description = "Italian ice cream available in various flavors",
+                price = 4.50
+            )
+        )
+
+        dishes.forEach { dish ->
+            db?.insert("dishes", null, dish.toContentValues())
+        }
+
+        // link dishes to restaurants in menu_elements table
+        val menuElements = listOf(
+            Pair(1, 1), // Spaghetti Carbonara to Symposium Cafe
+            Pair(1, 2), // Margherita Pizza to Symposium Cafe
+            Pair(2, 3),  // Caesar Salad to The Keg Oshawa
+            Pair(3, 4), // Grilled Salmon to Fazio's Italian Restaurant
+            Pair(3, 5), // Tiramisu to Fazio's Italian Restaurant
+            Pair(4, 6), // Bruschetta to Sushi Masa Japanese Restaurant
+            Pair(5, 7), // Risotto ai Funghi to Oshawa House Restaurant
+            Pair(5, 8)  // Gelato to Oshawa House Restaurant
+        )
+
+        menuElements.forEach { (restaurantId, dishId) ->
+            val contentValues = android.content.ContentValues().apply {
+                put("restaurantId", restaurantId)
+                put("dishId", dishId)
+            }
+            db?.insert("menu_elements", null, contentValues)
+        }
     }
 
     // example restaurants
@@ -183,4 +255,29 @@ class DatabaseHelper(
         val db = writableDatabase
         db.insert("restaurants", null, restaurant.toContentValues())
     }
+
+
+    // Menu and Menu elements Methods
+    // Get menu for a restaurant given the name
+    fun getMenuForRestaurant(restaurantName: String): List<Dish> {
+        val dishes = mutableListOf<Dish>()
+        val db = readableDatabase
+        val query = """
+            SELECT d.* FROM dishes d
+            JOIN menu_elements me ON d.id = me.dishId
+            JOIN restaurants r ON me.restaurantId = r.id
+            WHERE r.name = ?
+        """
+        val cursor = db.rawQuery(query, arrayOf(restaurantName))
+        while (cursor.moveToNext()) {
+            val dish: Dish = Dish.getFromCursor(cursor)
+            dishes.add(dish)
+        }
+        cursor.close()
+        return dishes
+    }
+
+
 }
+
+

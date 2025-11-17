@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val databaseVersion = 3
+        val databaseVersion = 4
         databaseHelper = DatabaseHelper(this, databaseVersion)
     }
 }
