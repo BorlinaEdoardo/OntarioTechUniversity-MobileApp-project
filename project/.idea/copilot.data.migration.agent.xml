@@ -11,7 +11,13 @@
         <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
           <value>
             <set>
+              <option value="1fcf5ad9-9a37-49f2-80f2-fa8864a9f680" />
+              <option value="338f2170-07a3-43b4-a2ef-d0e1cc12c98c" />
+              <option value="343cf568-1307-479a-8761-81b53ca9a59e" />
               <option value="55aca440-5cc4-4467-aecd-23740c66d980" />
+              <option value="61a249c5-fb7b-42d3-b3e6-e97d4dd64be6" />
+              <option value="710b0b9e-97d0-4492-b52a-4c853a40f93f" />
+              <option value="827febd5-d284-4a61-9626-ca59f8ea554e" />
             </set>
           </value>
         </entry>
@@ -28,10 +34,14 @@
     <pendingWorkingSetItems>
       <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
         <set>
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/MainActivity.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/NewRestaurantActivity.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/Dish.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_restaurant_menu.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/item_dish.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/DishAdapter.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantMenuActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantDetailActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_restaurant_detail.xml" />
         </set>
       </entry>
       <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
