@@ -1,5 +1,6 @@
 package com.test.project
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,14 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
             card.setOnClickListener {
                 // TODO: Navigate to detail screen with:
                 // restaurant description, video presentation, images, review section, etc.
+                // implementing placeholder for now
+                val context = itemView.context
+                val detailIntent = Intent(context, RestaurantDetailActivity::class.java)
+                detailIntent.putExtra("restaurantName", restaurant.name)
+                detailIntent.putExtra("restaurantDescription", restaurant.description)
+                // if needed add more extras here
+
+                context.startActivity(detailIntent)
 
             }
         }
