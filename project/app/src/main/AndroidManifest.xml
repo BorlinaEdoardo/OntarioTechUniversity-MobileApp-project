@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project">
         <activity
-            android:name=".RestaurantViewActivity"
+            android:name=".LoginPageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,18 +27,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewRestaurantActivity"
-            android:exported="false" />
-        <activity android:name=".MapActivity" />
-        <activity
-            android:name=".LoginPageActivity"
+            android:name=".RestaurantViewActivity"
             android:exported="false" />
         <activity
             android:name=".RestaurantDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".RestaurantViewActivity" />
         <activity
             android:name=".RestaurantMenuActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".RestaurantDetailActivity" />
     </application>
 
 </manifest>

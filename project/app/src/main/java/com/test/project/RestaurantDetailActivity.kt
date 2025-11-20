@@ -2,6 +2,7 @@ package com.test.project
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -14,6 +15,7 @@ class RestaurantDetailActivity : AppCompatActivity() {
         // Initialize views
         val restaurantNameTextView: TextView = findViewById(R.id.restaurantNameTextView)
         val viewMenuButton: Button = findViewById(R.id.viewMenuButton)
+        val backButton: ImageButton = findViewById(R.id.backButton)
 
         // Get restaurant name
         val restaurantName = intent.getStringExtra("restaurantName") ?: "Restaurant"
@@ -24,6 +26,11 @@ class RestaurantDetailActivity : AppCompatActivity() {
             val intent = Intent(this, RestaurantMenuActivity::class.java)
             intent.putExtra("RESTAURANT_NAME", restaurantName)
             startActivity(intent)
+        }
+
+        // Set up back button click listener
+        backButton.setOnClickListener {
+            finish()
         }
     }
 }

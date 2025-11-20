@@ -22,7 +22,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_restaurant_menu)
 
         // Initialize database helper
-        databaseHelper = DatabaseHelper(this, 4)
+        databaseHelper = DatabaseHelper(this)
 
         // Initialize views
         initViews()

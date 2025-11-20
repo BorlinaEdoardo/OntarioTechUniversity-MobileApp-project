@@ -4,14 +4,15 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+import org.mindrot.jbcrypt.BCrypt
+
 class DatabaseHelper(
     context: Context,
-    DATABASE_VERSION: Int,
 ) : SQLiteOpenHelper(
     context,
     "project.db",
     null,
-    DATABASE_VERSION
+    5
 ) {
     override fun onCreate(db: SQLiteDatabase?) {
         // Create Users table
@@ -95,6 +96,8 @@ class DatabaseHelper(
             )
         """)
 
+        // insert premade data
+        insertPremadeUsers(db)
         insertPremadeRestaurants(db)
         insertPremadeDishes(db)
     }
@@ -235,6 +238,30 @@ class DatabaseHelper(
         }
     }
 
+    // insert premade users
+    private fun insertPremadeUsers(db: SQLiteDatabase?) {
+        if (db == null) return
+
+        // Insert users directly during database creation to avoid recursion
+        val users = listOf(
+            Triple("Edoardo", "edoardo.borlina@gmail.com", "password"),
+            Triple("User", "user.example@email.com", "password")
+        )
+
+        users.forEach { (name, email, password) ->
+            val salt = BCrypt.gensalt()
+            val passwordHash = BCrypt.hashpw(password, salt)
+
+            val values = android.content.ContentValues().apply {
+                put("name", name)
+                put("email", email)
+                put("passwordHash", passwordHash)
+                put("salt", salt)
+            }
+
+            db.insert("users", null, values)
+        }
+    }
     /// Restaurants Table Methods
 
     // Get all restaurants
@@ -275,6 +302,56 @@ class DatabaseHelper(
         }
         cursor.close()
         return dishes
+    }
+
+    // User Table Methods
+
+    // retrieve user by email
+    fun getUserByEmail(email: String): User? {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM users WHERE email = ?", arrayOf(email))
+        var user: User? = null
+        if (cursor.moveToFirst()) {
+            user = User.getFromCursor(cursor)
+        }
+        cursor.close()
+        return user
+    }
+
+    // register user
+    fun registerUser(name: String, email: String, password: String): Boolean {
+        val db = writableDatabase
+
+        // check if user already exists
+        val existingUser = getUserByEmail(email)
+        if (existingUser != null) {
+            return false
+        }
+
+
+        val salt = BCrypt.gensalt()
+        val passwordHash = BCrypt.hashpw(password, salt)
+
+        val user = User(
+            name = name,
+            email = email,
+            passwordHash = passwordHash,
+            salt = salt
+        )
+
+        val result = db.insert("users", null, user.toContentValues())
+        return result != -1L
+    }
+
+    // autenticate userù
+    fun authenticateUser(email: String, password: String): User? {
+        val user = getUserByEmail(email) ?: return null
+
+        return if (BCrypt.checkpw(password, user.passwordHash)) {
+            user
+        } else {
+            null
+        }
     }
 
 

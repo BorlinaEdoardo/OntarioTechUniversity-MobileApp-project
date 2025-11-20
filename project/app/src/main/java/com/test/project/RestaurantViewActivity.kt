@@ -11,11 +11,13 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.project.database.DatabaseHelper
+import com.test.project.database.User
 
 class RestaurantViewActivity : AppCompatActivity() {
     private lateinit var databaseHelper: DatabaseHelper
@@ -23,6 +25,8 @@ class RestaurantViewActivity : AppCompatActivity() {
 
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var speechRecognizerIntent: Intent
+
+    private lateinit var user : User
 
     val permissionArray = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -45,6 +49,9 @@ class RestaurantViewActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
+        // Load user session
+        user = loadUserSession() ?: User(name = "Guest", email = "guest@example.com")
+
       addbtn.setOnClickListener {
             startActivity(Intent(this, NewRestaurantActivity::class.java))
         }
@@ -55,8 +62,15 @@ class RestaurantViewActivity : AppCompatActivity() {
         }
 
         logbtn.setOnClickListener {
-            val intent = android.content.Intent(this, LoginPageActivity::class.java)
+            // Clear user session
+            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+            sharedPref.edit().clear().apply()
+
+            // Go to login page
+            val intent = Intent(this, LoginPageActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            finish()
         }
 
         searchBox.addTextChangedListener(object : TextWatcher {
@@ -122,9 +136,24 @@ class RestaurantViewActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val databaseVersion = 3
-        databaseHelper = DatabaseHelper(this, databaseVersion)
+
+        if (::adapter.isInitialized) {
+            adapter.notifyDataSetChanged()
+        }
+
+        databaseHelper = DatabaseHelper(this)
 
         adapter.submit(databaseHelper.getAllRestaurants())
+    }
+
+    private fun loadUserSession(): User? {
+        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+        val name = sharedPref.getString("user_name", null)
+        val email = sharedPref.getString("user_email", null)
+        return if (name != null && email != null) {
+            User(name = name, email = email)
+        } else {
+            null
+        }
     }
 }

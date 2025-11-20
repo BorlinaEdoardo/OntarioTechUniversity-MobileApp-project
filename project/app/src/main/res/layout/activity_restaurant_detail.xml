@@ -9,20 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Restaurant Name - PLACEHOLDER -->
-        <TextView
-            android:id="@+id/restaurantNameTextView"
-            android:layout_width="0dp"
+        <!-- app bar-->
+        <LinearLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="Restaurant Name"
-            android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:contentDescription="Back"
+                app:tint="@android:color/white" />
+
+            <!-- Restaurant Name -->
+            <TextView
+                android:id="@+id/restaurantNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Restaurant Name"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
         <!-- Restaurant menu button -->
         <Button
@@ -33,7 +52,7 @@
             android:text="menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restaurantNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,14 +12,28 @@
           <value>
             <set>
               <option value="0d12af9c-d947-41d6-808c-7a65cfd0ae59" />
+              <option value="0f7d8360-f633-4664-a7a2-8a6713406b85" />
+              <option value="1d784e5d-d501-4510-beee-4110c0619f42" />
               <option value="1fcf5ad9-9a37-49f2-80f2-fa8864a9f680" />
               <option value="338f2170-07a3-43b4-a2ef-d0e1cc12c98c" />
               <option value="343cf568-1307-479a-8761-81b53ca9a59e" />
               <option value="44d96b65-0b8a-4b58-9bfa-8b6023fae99d" />
+              <option value="47af0b02-1ad0-453f-a9c3-744e3feb2acc" />
+              <option value="4cef7b1a-5793-4626-a06d-97609304893c" />
               <option value="55aca440-5cc4-4467-aecd-23740c66d980" />
               <option value="61a249c5-fb7b-42d3-b3e6-e97d4dd64be6" />
+              <option value="69ec1ae5-eaa7-40c1-b154-d2091d57ca42" />
               <option value="710b0b9e-97d0-4492-b52a-4c853a40f93f" />
+              <option value="76f0adef-37bd-4131-a6fc-b316bba117b2" />
+              <option value="7c770b17-1267-44ef-92c4-55a9cf8b85e7" />
               <option value="827febd5-d284-4a61-9626-ca59f8ea554e" />
+              <option value="8bc31534-2d88-4ce7-9c9b-759b0118ff96" />
+              <option value="a5be6534-20b4-41e1-85fd-0c08af3f8197" />
+              <option value="b7f3fd92-81d2-4166-be57-4cefc1918960" />
+              <option value="dce0b8f6-20a4-4238-af0d-dc6963c81725" />
+              <option value="e08ff4f1-7aaf-4367-a7d4-044047943413" />
+              <option value="ee6005af-22ed-4781-901e-b49c137a3e0d" />
+              <option value="f59a85a9-18f1-4b73-9450-0e6373cac7fe" />
             </set>
           </value>
         </entry>
@@ -36,14 +50,11 @@
     <pendingWorkingSetItems>
       <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
         <set>
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/Dish.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_restaurant_menu.xml" />
-          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/item_dish.xml" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/DishAdapter.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantMenuActivity.kt" />
           <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantDetailActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantMenuActivity.kt" />
           <option value="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_restaurant_detail.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
         </set>
       </entry>
       <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
