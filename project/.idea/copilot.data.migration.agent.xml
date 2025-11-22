@@ -5,6 +5,7 @@
     <option name="pendingSessionIds">
       <option value="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8" />
       <option value="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
+      <option value="e76e6254-33d5-4aec-96d8-6485acea2f18" />
     </option>
     <option name="pendingTurns">
       <map>
@@ -26,14 +27,18 @@
               <option value="710b0b9e-97d0-4492-b52a-4c853a40f93f" />
               <option value="76f0adef-37bd-4131-a6fc-b316bba117b2" />
               <option value="7c770b17-1267-44ef-92c4-55a9cf8b85e7" />
+              <option value="80f643b8-32fd-4d04-a122-7410e4fac8a8" />
               <option value="827febd5-d284-4a61-9626-ca59f8ea554e" />
               <option value="8bc31534-2d88-4ce7-9c9b-759b0118ff96" />
               <option value="a5be6534-20b4-41e1-85fd-0c08af3f8197" />
+              <option value="ad611eff-0716-4463-bc04-12a01531ad52" />
               <option value="b7f3fd92-81d2-4166-be57-4cefc1918960" />
               <option value="dce0b8f6-20a4-4238-af0d-dc6963c81725" />
               <option value="e08ff4f1-7aaf-4367-a7d4-044047943413" />
+              <option value="e8296733-f28c-4ed5-bad3-c0205fdeb2c5" />
               <option value="ee6005af-22ed-4781-901e-b49c137a3e0d" />
               <option value="f59a85a9-18f1-4b73-9450-0e6373cac7fe" />
+              <option value="f7388ac8-55ea-4a96-a2b6-d8c55caeba12" />
             </set>
           </value>
         </entry>
@@ -48,15 +53,7 @@
       </map>
     </option>
     <pendingWorkingSetItems>
-      <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
-        <set>
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantDetailActivity.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantMenuActivity.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
-        </set>
-      </entry>
+      <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8" />
       <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
     </pendingWorkingSetItems>
   </component>

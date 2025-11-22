@@ -241,24 +241,24 @@ class DatabaseHelper(
     // insert premade users
     private fun insertPremadeUsers(db: SQLiteDatabase?) {
         if (db == null) return
-
+        
         // Insert users directly during database creation to avoid recursion
         val users = listOf(
             Triple("Edoardo", "edoardo.borlina@gmail.com", "password"),
             Triple("User", "user.example@email.com", "password")
         )
-
+        
         users.forEach { (name, email, password) ->
             val salt = BCrypt.gensalt()
             val passwordHash = BCrypt.hashpw(password, salt)
-
+            
             val values = android.content.ContentValues().apply {
                 put("name", name)
                 put("email", email)
                 put("passwordHash", passwordHash)
                 put("salt", salt)
             }
-
+            
             db.insert("users", null, values)
         }
     }
@@ -352,6 +352,86 @@ class DatabaseHelper(
         } else {
             null
         }
+    }
+
+    // Review Methods
+
+    // Get all reviews for a restaurant
+    fun getReviewsForRestaurant(restaurantId: Int): List<Review> {
+        val reviews = mutableListOf<Review>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM reviews WHERE restaurantId = ?", arrayOf(restaurantId.toString()))
+        while (cursor.moveToNext()) {
+            val review: Review = Review.getFromCursor(cursor)
+            reviews.add(review)
+        }
+        cursor.close()
+        return reviews
+    }
+
+    // Get review by user and restaurant (since user can only have one review per restaurant)
+    fun getUserReviewForRestaurant(userId: Int, restaurantId: Int): Review? {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM reviews WHERE userId = ? AND restaurantId = ?",
+            arrayOf(userId.toString(), restaurantId.toString()))
+        var review: Review? = null
+        if (cursor.moveToFirst()) {
+            review = Review.getFromCursor(cursor)
+        }
+        cursor.close()
+        return review
+    }
+
+    // Insert or update a review (since user can only have one review per restaurant)
+    fun insertOrUpdateReview(review: Review): Boolean {
+        val db = writableDatabase
+        val result = db.insertWithOnConflict("reviews", null, review.toContentValues(),
+            android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE)
+        return result != -1L
+    }
+
+    // Delete a review
+    fun deleteReview(userId: Int, restaurantId: Int): Boolean {
+        val db = writableDatabase
+        val result = db.delete("reviews", "userId = ? AND restaurantId = ?",
+            arrayOf(userId.toString(), restaurantId.toString()))
+        return result > 0
+    }
+
+    // Get restaurant by ID
+    fun getRestaurantById(restaurantId: Int): Restaurant? {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM restaurants WHERE id = ?", arrayOf(restaurantId.toString()))
+        var restaurant: Restaurant? = null
+        if (cursor.moveToFirst()) {
+            restaurant = Restaurant.getFromCursor(cursor)
+        }
+        cursor.close()
+        return restaurant
+    }
+
+    // Get restaurant by name
+    fun getRestaurantByName(restaurantName: String): Restaurant? {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM restaurants WHERE name = ?", arrayOf(restaurantName))
+        var restaurant: Restaurant? = null
+        if (cursor.moveToFirst()) {
+            restaurant = Restaurant.getFromCursor(cursor)
+        }
+        cursor.close()
+        return restaurant
+    }
+
+    // Get user name by ID
+    fun getUserNameById(userId: Int): String? {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT name FROM users WHERE id = ?", arrayOf(userId.toString()))
+        var userName: String? = null
+        if (cursor.moveToFirst()) {
+            userName = cursor.getString(cursor.getColumnIndexOrThrow("name"))
+        }
+        cursor.close()
+        return userName
     }
 
 
