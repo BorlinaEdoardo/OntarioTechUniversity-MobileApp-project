@@ -245,6 +245,7 @@ class DatabaseHelper(
         // Insert users directly during database creation to avoid recursion
         val users = listOf(
             Triple("Edoardo", "edoardo.borlina@gmail.com", "password"),
+            Triple("Bralyn", "bralynlp@gmail.com", "password123"),
             Triple("User", "user.example@email.com", "password")
         )
         

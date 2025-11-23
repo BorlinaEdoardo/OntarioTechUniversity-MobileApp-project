@@ -37,6 +37,13 @@
             android:name=".RestaurantMenuActivity"
             android:exported="false"
             android:parentActivityName=".RestaurantDetailActivity" />
+        <activity
+            android:name=".MapActivity"
+            android:label="Map">
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB8QHLBZkGoRNlI0LwQXz8FHgZhEtW1DQY" />
     </application>
 
 </manifest>
