@@ -12,11 +12,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.card.MaterialCardView
 import com.test.project.database.DatabaseHelper
 import com.test.project.database.Restaurant
+import android.location.Geocoder
+import java.util.Locale
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -66,25 +67,42 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val OTU = LatLng(43.9456, -78.8968)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(OTU, 13f))
 
-        // Add restaurant markers from DB
         val restaurants = dbHelper.getAllRestaurants()
+        val geocoder = Geocoder(this, Locale.getDefault())
+
         restaurants.forEach { restaurant ->
-            val marker = map.addMarker(
-                MarkerOptions()
-                    .position(LatLng(restaurant.lat, restaurant.lng))
-                    .title(restaurant.name)
-            )
-            marker?.tag = restaurant
+            var position: LatLng? = null
+
+            // Use coordinates if available
+            if (restaurant.lat != 0.0 && restaurant.lng != 0.0) {
+                position = LatLng(restaurant.lat, restaurant.lng)
+            } else if (restaurant.address.isNotEmpty()) {
+                // Geocode the address
+                val addresses = geocoder.getFromLocationName(restaurant.address, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    val location = addresses[0]
+                    position = LatLng(location.latitude, location.longitude)
+                }
+            }
+
+            // Add marker if we got a position
+            position?.let {
+                val marker = map.addMarker(
+                    MarkerOptions()
+                        .position(it)
+                        .title(restaurant.name)
+                )
+                marker?.tag = restaurant
+            }
         }
 
-        // Marker click
         map.setOnMarkerClickListener { marker ->
             val restaurant = marker.tag as? Restaurant
-            if (restaurant != null) {
+            restaurant?.let {
                 bottomCard.visibility = View.VISIBLE
-                restaurantName.text = restaurant.name
-                restaurantAddress.text = restaurant.address
-                restaurantRating.text = "⭐ ${restaurant.rating}"
+                restaurantName.text = it.name
+                restaurantAddress.text = it.address
+                restaurantRating.text = "⭐ ${it.rating}"
             }
             map.animateCamera(CameraUpdateFactory.newLatLng(marker.position))
             true
