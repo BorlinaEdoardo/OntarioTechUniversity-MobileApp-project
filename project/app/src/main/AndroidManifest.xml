@@ -47,6 +47,14 @@
             android:name=".MapActivity"
             android:label="Map">
         </activity>
+        <activity
+            android:name=".OrdersViewActivity"
+            android:exported="false"
+            android:parentActivityName=".RestaurantViewActivity" />
+        <activity
+            android:name=".OrderDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".OrdersViewActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB8QHLBZkGoRNlI0LwQXz8FHgZhEtW1DQY" />

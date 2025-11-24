@@ -38,7 +38,7 @@ class DishAdapter(
             onItemClick(dish)
         }
 
-        // placeholder image, for now
+        // placeholder image
     }
 
     override fun getItemCount() = dishes.size

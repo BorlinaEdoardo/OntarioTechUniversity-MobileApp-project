@@ -554,6 +554,171 @@ class DatabaseHelper(
         return userName
     }
 
+    /// Order & Order element Methods
+
+    // create order
+    fun createOrder(userId: Int, restaurantId: Int, dishIds: List<Int>): Boolean {
+        val db = writableDatabase
+        db.beginTransaction()
+        return try {
+            // Insert order
+            val orderValues = android.content.ContentValues().apply {
+                put("userId", userId)
+                put("restaurantId", restaurantId)
+            }
+            val orderId = db.insert("orders", null, orderValues)
+            if (orderId == -1L) {
+                throw Exception("Failed to create order")
+            }
+
+            // Insert order elements
+            dishIds.forEach { dishId ->
+                val orderElementValues = android.content.ContentValues().apply {
+                    put("orderId", orderId)
+                    put("dishId", dishId)
+                }
+                val result = db.insert("order_elements", null, orderElementValues)
+                if (result == -1L) {
+                    throw Exception("Failed to add dish $dishId to order")
+                }
+            }
+
+            db.setTransactionSuccessful()
+            true
+        } catch (e: Exception) {
+            false
+        } finally {
+            db.endTransaction()
+        }
+    }
+
+    // Get orders for a user
+    fun getOrdersForUser(userId: Int): List<Order> {
+        val orders = mutableListOf<Order>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM orders WHERE userId = ?", arrayOf(userId.toString()))
+        while (cursor.moveToNext()) {
+            val order: Order = Order.getFromCursor(cursor)
+            orders.add(order)
+        }
+        cursor.close()
+        return orders
+    }
+
+    // Get or create an order for a user and restaurant
+    fun getOrCreateOrder(userId: Int, restaurantId: Int): Int? {
+        val db = writableDatabase
+
+        // First, try to find existing order
+        val cursor = db.rawQuery(
+            "SELECT orderId FROM orders WHERE userId = ? AND restaurantId = ?",
+            arrayOf(userId.toString(), restaurantId.toString())
+        )
+
+        var orderId: Int? = null
+        if (cursor.moveToFirst()) {
+            orderId = cursor.getInt(cursor.getColumnIndexOrThrow("orderId"))
+        }
+        cursor.close()
+
+        // If no order exists, create one
+        if (orderId == null) {
+            val orderValues = android.content.ContentValues().apply {
+                put("userId", userId)
+                put("restaurantId", restaurantId)
+            }
+            val newOrderId = db.insert("orders", null, orderValues)
+            orderId = if (newOrderId != -1L) newOrderId.toInt() else null
+        }
+
+        return orderId
+    }
+
+    // remove element from order
+    fun removeDishFromOrder(orderId: Int, dishId: Int): Boolean {
+        val db = writableDatabase
+        val result = db.delete("order_elements", "orderId = ? AND dishId = ?",
+            arrayOf(orderId.toString(), dishId.toString()))
+        return result > 0
+    }
+
+    // add element to order
+    fun addDishToOrder(orderId: Int, dishId: Int): Boolean {
+        val db = writableDatabase
+
+        // Check if dish is already in order
+        val cursor = db.rawQuery(
+            "SELECT * FROM order_elements WHERE orderId = ? AND dishId = ?",
+            arrayOf(orderId.toString(), dishId.toString())
+        )
+        val alreadyExists = cursor.count > 0
+        cursor.close()
+
+        if (alreadyExists) {
+            // Dish already in order, return true (already added)
+            return true
+        }
+
+        val orderElementValues = OrderElement(
+            orderId = orderId,
+            dishId = dishId
+        ).toContentValues()
+        val result = db.insert("order_elements", null, orderElementValues)
+        return result != -1L
+    }
+
+    // Get all dishes in an order
+    fun getOrderItems(orderId: Int): List<Dish> {
+        val dishes = mutableListOf<Dish>()
+        val db = readableDatabase
+        val query = """
+            SELECT d.* FROM dishes d
+            JOIN order_elements oe ON d.id = oe.dishId
+            WHERE oe.orderId = ?
+        """
+        val cursor = db.rawQuery(query, arrayOf(orderId.toString()))
+        while (cursor.moveToNext()) {
+            val dish = Dish.getFromCursor(cursor)
+            dishes.add(dish)
+        }
+        cursor.close()
+        return dishes
+    }
+
+    // Count items in an order
+    fun getOrderItemsCount(orderId: Int): Int {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT COUNT(*) FROM order_elements WHERE orderId = ?",
+            arrayOf(orderId.toString())
+        )
+        var count = 0
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0)
+        }
+        cursor.close()
+        return count
+    }
+
+    // Calculate total price of an order
+    fun getOrderTotal(orderId: Int): Double {
+        val db = readableDatabase
+        val query = """
+            SELECT SUM(d.price) as total FROM dishes d
+            JOIN order_elements oe ON d.id = oe.dishId
+            WHERE oe.orderId = ?
+        """
+        val cursor = db.rawQuery(query, arrayOf(orderId.toString()))
+        var total = 0.0
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("total")
+            if (columnIndex != -1 && !cursor.isNull(columnIndex)) {
+                total = cursor.getDouble(columnIndex)
+            }
+        }
+        cursor.close()
+        return total
+    }
 
 }
 

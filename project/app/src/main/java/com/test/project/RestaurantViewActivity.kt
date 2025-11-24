@@ -43,6 +43,7 @@ class RestaurantViewActivity : AppCompatActivity() {
         val mapbtn: ImageButton = findViewById(R.id.btnMap)
         val logbtn: ImageButton = findViewById(R.id.btnAccount)
         val addbtn: ImageButton = findViewById(R.id.addTaskBtn)
+        val orderbtn: ImageButton = findViewById(R.id.btnCart)
         val micSearchBtn: ImageButton = findViewById(R.id.voiceSearchBtn)
 
         adapter = RestaurantAdapter()
@@ -58,6 +59,10 @@ class RestaurantViewActivity : AppCompatActivity() {
 
         mapbtn.setOnClickListener {
             val intent = android.content.Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+        orderbtn.setOnClickListener {
+            val intent = Intent(this, OrdersViewActivity::class.java)
             startActivity(intent)
         }
 
