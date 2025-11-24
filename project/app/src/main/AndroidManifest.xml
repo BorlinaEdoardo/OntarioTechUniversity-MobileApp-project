@@ -36,6 +36,9 @@
             android:name=".RestaurantViewActivity"
             android:exported="false" />
         <activity
+            android:name=".NewRestaurantActivity"
+            android:exported="false" />
+        <activity
             android:name=".RestaurantDetailActivity"
             android:exported="false"
             android:parentActivityName=".RestaurantViewActivity" />
