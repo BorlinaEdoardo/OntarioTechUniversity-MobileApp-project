@@ -55,7 +55,15 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
         fun bind(restaurant: Restaurant) {
             name.text = restaurant.name
-            rating.text = String.format("%.1f", restaurant.rating ?: 4.5f)
+
+            // Display rating or "N/A" if no rating
+            val ratingValue = restaurant.rating ?: 0f
+            rating.text = if (ratingValue > 0f) {
+                String.format("%.1f", ratingValue)
+            } else {
+                "N/A"
+            }
+
             cuisine.text = restaurant.shortDescription ?: "Restaurant"
 
             // Set sample image (same for all restaurants for now)
@@ -74,14 +82,12 @@ class RestaurantAdapter : RecyclerView.Adapter<RestaurantAdapter.RestaurantVH>()
 
 
             card.setOnClickListener {
-                // TODO: Navigate to detail screen with:
-                // restaurant description, video presentation, images, review section, etc.
-                // implementing placeholder for now
+
                 val context = itemView.context
                 val detailIntent = Intent(context, RestaurantDetailActivity::class.java)
                 detailIntent.putExtra("restaurantName", restaurant.name)
                 detailIntent.putExtra("restaurantDescription", restaurant.description)
-                // if needed add more extras here
+
 
                 context.startActivity(detailIntent)
 

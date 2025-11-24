@@ -1,0 +1,36 @@
+Index: .idea/copilot.data.migration.agent.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AgentMigrationStateService\">\r\n    <option name=\"migrationStatus\" value=\"IN_PROGRESS\" />\r\n    <option name=\"pendingSessionIds\">\r\n      <option value=\"06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8\" />\r\n      <option value=\"e6c829f2-e32e-4bb8-8664-d910db5325a4\" />\r\n    </option>\r\n    <option name=\"pendingTurns\">\r\n      <map>\r\n        <entry key=\"06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8\">\r\n          <value>\r\n            <set>\r\n              <option value=\"55aca440-5cc4-4467-aecd-23740c66d980\" />\r\n            </set>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"e6c829f2-e32e-4bb8-8664-d910db5325a4\">\r\n          <value>\r\n            <set>\r\n              <option value=\"acc0aac0-5241-416d-b277-404a887e4223\" />\r\n              <option value=\"addcb8a9-5359-4119-8c2e-cfd9d0041c65\" />\r\n            </set>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <pendingWorkingSetItems>\r\n      <entry key=\"06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8\">\r\n        <set>\r\n          <option value=\"file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt\" />\r\n          <option value=\"file://$PROJECT_DIR$/app/src/main/java/com/test/project/MainActivity.kt\" />\r\n          <option value=\"file://$PROJECT_DIR$/app/src/main/java/com/test/project/NewRestaurantActivity.kt\" />\r\n          <option value=\"file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt\" />\r\n        </set>\r\n      </entry>\r\n      <entry key=\"e6c829f2-e32e-4bb8-8664-d910db5325a4\" />\r\n    </pendingWorkingSetItems>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/copilot.data.migration.agent.xml b/.idea/copilot.data.migration.agent.xml
+--- a/.idea/copilot.data.migration.agent.xml	(revision b7bdb2b31f510a7af4b5d945ca6f1793547e3bfe)
++++ b/.idea/copilot.data.migration.agent.xml	(date 1763943699705)
+@@ -11,7 +11,9 @@
+         <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
+           <value>
+             <set>
++              <option value="2bc64c1f-771b-41cf-bd50-523e56f00328" />
+               <option value="55aca440-5cc4-4467-aecd-23740c66d980" />
++              <option value="7abfb82e-107e-4698-84a3-cf27a27f6b44" />
+             </set>
+           </value>
+         </entry>
+@@ -26,14 +28,7 @@
+       </map>
+     </option>
+     <pendingWorkingSetItems>
+-      <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8">
+-        <set>
+-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
+-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/MainActivity.kt" />
+-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/NewRestaurantActivity.kt" />
+-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantViewActivity.kt" />
+-        </set>
+-      </entry>
++      <entry key="06e0b3f0-df21-4af4-b0f5-1b2f0d477ac8" />
+       <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />
+     </pendingWorkingSetItems>
+   </component>

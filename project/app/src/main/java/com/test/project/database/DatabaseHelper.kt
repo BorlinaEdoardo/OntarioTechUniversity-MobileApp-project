@@ -12,7 +12,7 @@ class DatabaseHelper(
     context,
     "project.db",
     null,
-    5
+    6
 ) {
     override fun onCreate(db: SQLiteDatabase?) {
         // Create Users table
@@ -100,6 +100,7 @@ class DatabaseHelper(
         insertPremadeUsers(db)
         insertPremadeRestaurants(db)
         insertPremadeDishes(db)
+        insertPremadeReviews(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -195,7 +196,7 @@ class DatabaseHelper(
                 name = "Symposium Cafe Restaurant & Lounge",
                 description = "A vibrant restaurant and lounge offering contemporary Canadian cuisine with international influences. Known for their extensive menu featuring everything from pasta and steaks to fresh salads and creative desserts. The atmosphere is warm and welcoming, perfect for both casual dining and special occasions.",
                 shortDescription = "Contemporary Canadian cuisine",
-                rating = 4.2f,
+                rating = 0f,
                 address = "1300 King St E, Oshawa, ON L1H 8J4",
                 phoneNumber = "(905) 436-3354"
             ),
@@ -203,7 +204,7 @@ class DatabaseHelper(
                 name = "The Keg Oshawa",
                 description = "A classic steakhouse chain known for their premium steaks, fresh seafood, and signature caesar salads. The Keg offers a sophisticated dining experience with their dark wood decor and comfortable atmosphere. Their menu features AAA grade steaks, lobster, and an extensive wine selection.",
                 shortDescription = "Premium steakhouse",
-                rating = 4.4f,
+                rating = 0f, // Will be calculated from reviews
                 address = "1200 Thornton Rd N, Oshawa, ON L1H 7K4",
                 phoneNumber = "(905) 433-3700"
             ),
@@ -211,7 +212,7 @@ class DatabaseHelper(
                 name = "Fazio's Italian Restaurant",
                 description = "Family-owned authentic Italian restaurant serving traditional recipes passed down through generations. Features homemade pasta, wood-fired pizza, and classic Italian entrees. The cozy atmosphere and friendly service make it feel like dining at an Italian family's home.",
                 shortDescription = "Authentic Italian family dining",
-                rating = 4.6f,
+                rating = 0f, // Will be calculated from reviews
                 address = "1668 Simcoe St N, Oshawa, ON L1G 4X6",
                 phoneNumber = "(905) 436-3287"
             ),
@@ -219,7 +220,7 @@ class DatabaseHelper(
                 name = "Sushi Masa Japanese Restaurant",
                 description = "Fresh and authentic Japanese cuisine featuring expertly crafted sushi, sashimi, and traditional Japanese dishes. The chef uses only the finest ingredients to create beautiful presentations. The minimalist decor creates a peaceful dining environment perfect for enjoying the artistry of Japanese cuisine.",
                 shortDescription = "Fresh authentic Japanese sushi",
-                rating = 4.5f,
+                rating = 0f, // Will be calculated from reviews
                 address = "1300 King St E Unit 3, Oshawa, ON L1H 8J4",
                 phoneNumber = "(905) 240-0888"
             ),
@@ -227,7 +228,7 @@ class DatabaseHelper(
                 name = "Oshawa House Restaurant",
                 description = "A local landmark serving comfort food and traditional favorites for over 30 years. Known for their generous portions, friendly service, and classic diner atmosphere. Popular for breakfast all day, hearty burgers, and homestyle dinners that remind you of home cooking.",
                 shortDescription = "Classic comfort food diner",
-                rating = 4.1f,
+                rating = 0f, // Will be calculated from reviews
                 address = "1425 King St E, Oshawa, ON L1H 8J6",
                 phoneNumber = "(905) 579-4449"
             )
@@ -262,6 +263,65 @@ class DatabaseHelper(
             
             db.insert("users", null, values)
         }
+    }
+
+    // insert premade reviews
+    private fun insertPremadeReviews(db: SQLiteDatabase?) {
+        if (db == null) return
+
+        // Example reviews from different users
+        val reviews = listOf(
+            // Reviews for Symposium Cafe (restaurantId = 1)
+            Review(userId = 1, restaurantId = 1, rating = 4.0f, comment = "Great atmosphere and delicious food!"),
+            Review(userId = 2, restaurantId = 1, rating = 4.5f, comment = "Love their desserts, highly recommended!"),
+
+            // Reviews for The Keg Oshawa (restaurantId = 2)
+            Review(userId = 1, restaurantId = 2, rating = 5.0f, comment = "Best steaks in town! Perfect cooking every time."),
+            Review(userId = 3, restaurantId = 2, rating = 4.0f, comment = "Excellent service and quality meat."),
+
+            // Reviews for Fazio's Italian Restaurant (restaurantId = 3)
+            Review(userId = 2, restaurantId = 3, rating = 4.5f, comment = "Authentic Italian cuisine, feels like home!"),
+            Review(userId = 3, restaurantId = 3, rating = 5.0f, comment = "The pasta is amazing, family-friendly atmosphere."),
+
+            // Reviews for Sushi Masa (restaurantId = 4)
+            Review(userId = 1, restaurantId = 4, rating = 4.5f, comment = "Fresh sushi, beautiful presentation!"),
+            Review(userId = 2, restaurantId = 4, rating = 4.0f, comment = "Good quality fish, nice ambiance."),
+
+            // Reviews for Oshawa House Restaurant (restaurantId = 5)
+            Review(userId = 3, restaurantId = 5, rating = 4.0f, comment = "Classic diner with great comfort food!")
+        )
+
+        reviews.forEach { review ->
+            db.insert("reviews", null, review.toContentValues())
+        }
+
+        // Update restaurant ratings based on these reviews
+        for (restaurantId in 1..5) {
+            val avgRating = calculateAverageRatingFromDb(db, restaurantId)
+            val contentValues = android.content.ContentValues().apply {
+                put("rating", avgRating)
+            }
+            db.update("restaurants", contentValues, "id = ?", arrayOf(restaurantId.toString()))
+        }
+    }
+
+    // Helper method to calculate average rating during onCreate (when db is being created)
+    private fun calculateAverageRatingFromDb(db: SQLiteDatabase, restaurantId: Int): Float {
+        val cursor = db.rawQuery(
+            "SELECT AVG(rating) as avgRating FROM reviews WHERE restaurantId = ?",
+            arrayOf(restaurantId.toString())
+        )
+
+        var avgRating = 0f
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("avgRating")
+            if (columnIndex != -1 && !cursor.isNull(columnIndex)) {
+                avgRating = cursor.getFloat(columnIndex)
+            }
+        }
+        cursor.close()
+
+        return avgRating
     }
     /// Restaurants Table Methods
 
@@ -388,6 +448,12 @@ class DatabaseHelper(
         val db = writableDatabase
         val result = db.insertWithOnConflict("reviews", null, review.toContentValues(),
             android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE)
+
+        // Update restaurant rating after insertion/update
+        if (result != -1L) {
+            updateRestaurantRating(review.restaurantId)
+        }
+
         return result != -1L
     }
 
@@ -396,7 +462,45 @@ class DatabaseHelper(
         val db = writableDatabase
         val result = db.delete("reviews", "userId = ? AND restaurantId = ?",
             arrayOf(userId.toString(), restaurantId.toString()))
+
+        // Update restaurant rating after deletion
+        if (result > 0) {
+            updateRestaurantRating(restaurantId)
+        }
+
         return result > 0
+    }
+
+    // Calculate average rating for a restaurant
+    fun calculateAverageRating(restaurantId: Int): Float {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT AVG(rating) as avgRating FROM reviews WHERE restaurantId = ?",
+            arrayOf(restaurantId.toString())
+        )
+
+        var avgRating = 0f
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("avgRating")
+            if (columnIndex != -1 && !cursor.isNull(columnIndex)) {
+                avgRating = cursor.getFloat(columnIndex)
+            }
+        }
+        cursor.close()
+
+        return avgRating
+    }
+
+    // Update restaurant rating based on reviews
+    fun updateRestaurantRating(restaurantId: Int) {
+        val db = writableDatabase
+        val avgRating = calculateAverageRating(restaurantId)
+
+        val contentValues = android.content.ContentValues().apply {
+            put("rating", avgRating)
+        }
+
+        db.update("restaurants", contentValues, "id = ?", arrayOf(restaurantId.toString()))
     }
 
     // Get restaurant by ID

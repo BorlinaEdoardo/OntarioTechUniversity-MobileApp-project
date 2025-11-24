@@ -148,6 +148,12 @@ class RestaurantDetailActivity : AppCompatActivity() {
                         if (existingReview != null) "Review updated successfully" else "Review added successfully",
                         Toast.LENGTH_SHORT).show()
                     loadReviews() // Refresh the reviews list
+
+                    // Reload restaurant data to get updated rating
+                    currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
+
+                    // Set result to notify calling activity to refresh
+                    setResult(RESULT_OK)
                 } else {
                     Toast.makeText(this, "Failed to save review", Toast.LENGTH_SHORT).show()
                 }
@@ -160,6 +166,12 @@ class RestaurantDetailActivity : AppCompatActivity() {
                 if (databaseHelper.deleteReview(currentUser, restaurantId)) {
                     Toast.makeText(this, "Review deleted successfully", Toast.LENGTH_SHORT).show()
                     loadReviews() // Refresh the reviews list
+
+                    // Reload restaurant data to get updated rating
+                    currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
+
+                    // Set result to notify calling activity to refresh
+                    setResult(RESULT_OK)
                 } else {
                     Toast.makeText(this, "Failed to delete review", Toast.LENGTH_SHORT).show()
                 }
