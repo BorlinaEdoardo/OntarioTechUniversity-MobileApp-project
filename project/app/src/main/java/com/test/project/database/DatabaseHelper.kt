@@ -12,7 +12,7 @@ class DatabaseHelper(
     context,
     "project.db",
     null,
-    6
+    7
 ) {
     override fun onCreate(db: SQLiteDatabase?) {
         // Create Users table
@@ -35,7 +35,10 @@ class DatabaseHelper(
                 phoneNumber TEXT NOT NULL,
                 description TEXT,
                 shortDescription TEXT,
-                rating REAL
+                rating REAL,
+                videoUri TEXT,
+                image1Uri TEXT,
+                image2Uri TEXT
             )
         """)
 
@@ -342,6 +345,18 @@ class DatabaseHelper(
     fun insertRestaurant(restaurant: Restaurant){
         val db = writableDatabase
         db.insert("restaurants", null, restaurant.toContentValues())
+    }
+
+    // Update restaurant media (video and images)
+    fun updateRestaurantMedia(restaurantId: Int, videoUri: String?, image1Uri: String?, image2Uri: String?): Boolean {
+        val db = writableDatabase
+        val contentValues = android.content.ContentValues().apply {
+            put("videoUri", videoUri)
+            put("image1Uri", image1Uri)
+            put("image2Uri", image2Uri)
+        }
+        val result = db.update("restaurants", contentValues, "id = ?", arrayOf(restaurantId.toString()))
+        return result > 0
     }
 
 

@@ -1,14 +1,21 @@
 package com.test.project
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.EditText
 import android.widget.RatingBar
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.project.database.DatabaseHelper
@@ -23,9 +30,23 @@ class RestaurantDetailActivity : AppCompatActivity() {
     private var currentRestaurant: Restaurant? = null
     private var currentUserId: Int? = null
 
+    // Media elements
+    private lateinit var videoView: VideoView
+    private lateinit var imageView1: ImageView
+    private lateinit var imageView2: ImageView
+
+    // Request codes for media picker
+    private val REQUEST_VIDEO = 100
+    private val REQUEST_IMAGE_1 = 101
+    private val REQUEST_IMAGE_2 = 102
+    private val REQUEST_PERMISSIONS = 200
+
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant_detail)
+
+        // Check and request permissions
+        checkMediaPermissions()
 
         // Initialize database helper
         databaseHelper = DatabaseHelper(this)
@@ -35,10 +56,22 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         // Initialize views
         val restaurantNameTextView: TextView = findViewById(R.id.restaurantNameTextView)
+        val restaurantDescriptionTextView: TextView = findViewById(R.id.restaurantDescriptionTextView)
+        val restaurantAddressTextView: TextView = findViewById(R.id.restaurantAddressTextView)
+        val restaurantPhoneTextView: TextView = findViewById(R.id.restaurantPhoneTextView)
         val viewMenuButton: Button = findViewById(R.id.viewMenuButton)
         val backButton: ImageButton = findViewById(R.id.backButton)
         val addCommentButton: Button = findViewById(R.id.addCommentButton)
         reviewsRecyclerView = findViewById(R.id.reviewsRecyclerView)
+
+        // Media elements
+        videoView = findViewById(R.id.restaurantVideoView)
+        imageView1 = findViewById(R.id.restaurantImage1)
+        imageView2 = findViewById(R.id.restaurantImage2)
+
+        val uploadVideoButton: Button = findViewById(R.id.uploadVideoButton)
+        val uploadImage1Button: Button = findViewById(R.id.uploadImage1Button)
+        val uploadImage2Button: Button = findViewById(R.id.uploadImage2Button)
 
         // Get restaurant name and load restaurant data
         val restaurantName = intent.getStringExtra("restaurantName") ?: "Restaurant"
@@ -46,6 +79,45 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         // Load restaurant from database
         currentRestaurant = databaseHelper.getRestaurantByName(restaurantName)
+
+        // Display restaurant information
+        currentRestaurant?.let { restaurant ->
+            restaurantDescriptionTextView.text = restaurant.description ?: "No description available"
+            restaurantAddressTextView.text = "📍 ${restaurant.address}"
+            restaurantPhoneTextView.text = "📞 ${restaurant.phoneNumber}"
+
+            // Load saved media
+            restaurant.videoUri?.let { uriString ->
+                try {
+                    val uri = Uri.parse(uriString)
+                    videoView.setVideoURI(uri)
+                    videoView.setOnPreparedListener { mp ->
+                        mp.isLooping = true
+                    }
+                    videoView.start()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            restaurant.image1Uri?.let { uriString ->
+                try {
+                    val uri = Uri.parse(uriString)
+                    imageView1.setImageURI(uri)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            restaurant.image2Uri?.let { uriString ->
+                try {
+                    val uri = Uri.parse(uriString)
+                    imageView2.setImageURI(uri)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
         // Set up RecyclerView
         setupRecyclerView()
@@ -70,6 +142,19 @@ class RestaurantDetailActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             showAddReviewDialog()
+        }
+
+        // Upload media buttons
+        uploadVideoButton.setOnClickListener {
+            openVideoPicker()
+        }
+
+        uploadImage1Button.setOnClickListener {
+            openImagePicker(REQUEST_IMAGE_1)
+        }
+
+        uploadImage2Button.setOnClickListener {
+            openImagePicker(REQUEST_IMAGE_2)
         }
     }
 
@@ -179,5 +264,142 @@ class RestaurantDetailActivity : AppCompatActivity() {
         }
 
         dialog.create().show()
+    }
+
+    // Open video picker
+    private fun openVideoPicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "video/*"
+        startActivityForResult(intent, REQUEST_VIDEO)
+    }
+
+    // Open image picker
+    private fun openImagePicker(requestCode: Int) {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "image/*"
+        startActivityForResult(intent, requestCode)
+    }
+
+    // Handle media selection results
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK && data != null) {
+            val selectedUri: Uri? = data.data
+            val restaurant = currentRestaurant ?: return
+            val restaurantId = restaurant.id ?: return
+
+            selectedUri?.let { uri ->
+                // Request persistent permission for the URI
+                try {
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                when (requestCode) {
+                    REQUEST_VIDEO -> {
+                        videoView.setVideoURI(uri)
+                        videoView.setOnPreparedListener { mp ->
+                            mp.isLooping = true
+                        }
+                        videoView.start()
+
+                        // Save to database
+                        val success = databaseHelper.updateRestaurantMedia(
+                            restaurantId,
+                            uri.toString(),
+                            restaurant.image1Uri,
+                            restaurant.image2Uri
+                        )
+
+                        if (success) {
+                            currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
+                            Toast.makeText(this, "Video saved successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to save video", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    REQUEST_IMAGE_1 -> {
+                        imageView1.setImageURI(uri)
+
+                        // Save to database
+                        val success = databaseHelper.updateRestaurantMedia(
+                            restaurantId,
+                            restaurant.videoUri,
+                            uri.toString(),
+                            restaurant.image2Uri
+                        )
+
+                        if (success) {
+                            currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
+                            Toast.makeText(this, "Image 1 saved successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to save image 1", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    REQUEST_IMAGE_2 -> {
+                        imageView2.setImageURI(uri)
+
+                        // Save to database
+                        val success = databaseHelper.updateRestaurantMedia(
+                            restaurantId,
+                            restaurant.videoUri,
+                            restaurant.image1Uri,
+                            uri.toString()
+                        )
+
+                        if (success) {
+                            currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
+                            Toast.makeText(this, "Image 2 saved successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to save image 2", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Check and request media permissions
+    private fun checkMediaPermissions() {
+        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(
+                android.Manifest.permission.READ_MEDIA_VIDEO,
+                android.Manifest.permission.READ_MEDIA_IMAGES
+            )
+        } else {
+            arrayOf(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
+
+        val permissionsToRequest = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsToRequest.toTypedArray(), REQUEST_PERMISSIONS)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSIONS) {
+            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Some permissions were denied. Media features may not work.", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

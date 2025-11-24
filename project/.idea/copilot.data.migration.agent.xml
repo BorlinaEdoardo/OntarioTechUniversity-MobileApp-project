@@ -18,12 +18,16 @@
               <option value="1fcf5ad9-9a37-49f2-80f2-fa8864a9f680" />
               <option value="338f2170-07a3-43b4-a2ef-d0e1cc12c98c" />
               <option value="343cf568-1307-479a-8761-81b53ca9a59e" />
+              <option value="3b2ff2fb-855f-40af-8c6e-af535027cd1c" />
               <option value="44d96b65-0b8a-4b58-9bfa-8b6023fae99d" />
+              <option value="469f4ed4-700b-4dfc-ba4a-53a581dee3fe" />
               <option value="47af0b02-1ad0-453f-a9c3-744e3feb2acc" />
+              <option value="4cba1133-d320-4733-9819-83bf05f4e444" />
               <option value="4cef7b1a-5793-4626-a06d-97609304893c" />
               <option value="55aca440-5cc4-4467-aecd-23740c66d980" />
               <option value="61a249c5-fb7b-42d3-b3e6-e97d4dd64be6" />
               <option value="69ec1ae5-eaa7-40c1-b154-d2091d57ca42" />
+              <option value="6d552fe7-e9e8-42c9-bbd9-ed31e1334047" />
               <option value="710b0b9e-97d0-4492-b52a-4c853a40f93f" />
               <option value="7669dbbf-997e-4368-8fec-0060cb33d62e" />
               <option value="76f0adef-37bd-4131-a6fc-b316bba117b2" />
@@ -60,6 +64,12 @@
         <set>
           <option value="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_zoom_in.xml" />
           <option value="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_zoom_out.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/DatabaseHelper.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantDetailActivity.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/RestaurantAdapter.kt" />
+          <option value="file://$PROJECT_DIR$/app/src/main/res/layout/activity_restaurant_detail.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+          <option value="file://$PROJECT_DIR$/app/src/main/java/com/test/project/database/Restaurant.kt" />
         </set>
       </entry>
       <entry key="e6c829f2-e32e-4bb8-8664-d910db5325a4" />

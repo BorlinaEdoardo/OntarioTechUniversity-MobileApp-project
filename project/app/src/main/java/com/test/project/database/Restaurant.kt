@@ -12,7 +12,10 @@ data class Restaurant(
     val address: String,
     val phoneNumber: String,
     val lat: Double = 0.0,
-    val lng: Double = 0.0
+    val lng: Double = 0.0,
+    val videoUri: String? = null,
+    val image1Uri: String? = null,
+    val image2Uri: String? = null
 ){
     fun toContentValues(): ContentValues{
         return ContentValues().apply {
@@ -22,6 +25,9 @@ data class Restaurant(
             put("description", description)
             put("shortDescription", shortDescription)
             put("rating", rating)
+            put("videoUri", videoUri)
+            put("image1Uri", image1Uri)
+            put("image2Uri", image2Uri)
         }
     }
 
@@ -36,7 +42,17 @@ data class Restaurant(
             val shortDescription = cursor.getString(cursor.getColumnIndexOrThrow("shortDescription"))
             val rating = cursor.getFloat(cursor.getColumnIndexOrThrow("rating"))
 
-            return Restaurant(id, name, description, shortDescription, rating, address, phoneNumber)
+            val videoUri = cursor.getColumnIndex("videoUri").let {
+                if (it != -1 && !cursor.isNull(it)) cursor.getString(it) else null
+            }
+            val image1Uri = cursor.getColumnIndex("image1Uri").let {
+                if (it != -1 && !cursor.isNull(it)) cursor.getString(it) else null
+            }
+            val image2Uri = cursor.getColumnIndex("image2Uri").let {
+                if (it != -1 && !cursor.isNull(it)) cursor.getString(it) else null
+            }
+
+            return Restaurant(id, name, description, shortDescription, rating, address, phoneNumber, 0.0, 0.0, videoUri, image1Uri, image2Uri)
         }
     }
 
