@@ -1,0 +1,313 @@
+Index: app/src/main/res/layout/activity_map.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/rootLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#FAFAFA\">\r\n\r\n    <!-- Top App Bar -->\r\n    <com.google.android.material.appbar.MaterialToolbar\r\n        android:id=\"@+id/topAppBar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"?attr/actionBarSize\"\r\n        android:backgroundTint=\"#FF7043\"\r\n        android:title=\"Find Restaurants Nearby\"\r\n        android:titleTextColor=\"@android:color/white\"\r\n        app:navigationIcon=\"@drawable/ic_baseline_arrow_back_24\" />\r\n\r\n    <!-- Search Bar -->\r\n    <LinearLayout\r\n        android:id=\"@+id/searchContainer\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_margin=\"16dp\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:background=\"@drawable/search_background\"\r\n        android:padding=\"8dp\"\r\n        app:layout_anchor=\"@id/topAppBar\"\r\n        app:layout_anchorGravity=\"bottom\">\r\n\r\n        <!-- Image Placeholder -->\r\n        <ImageView\r\n            android:layout_width=\"24dp\"\r\n            android:layout_height=\"24dp\"\r\n            android:src=\"@android:drawable/ic_menu_search\"\r\n            app:tint=\"#757575\"\r\n            android:layout_gravity=\"center_vertical\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/searchEditText\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_weight=\"1\"\r\n            android:hint=\"Search for restaurants...\"\r\n            android:paddingStart=\"8dp\"\r\n            android:background=\"@android:color/transparent\"\r\n            android:textColor=\"#212121\"\r\n            android:textSize=\"16sp\" />\r\n    </LinearLayout>\r\n\r\n    <!-- Placeholder Map Container -->\r\n    <FrameLayout\r\n        android:id=\"@+id/mapPlaceholder\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_marginHorizontal=\"16dp\"\r\n        android:layout_marginTop=\"90dp\"\r\n        android:layout_marginBottom=\"120dp\"\r\n        android:background=\"@drawable/map_placeholder\"\r\n        app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"\r\n        android:layout_gravity=\"center\"\r\n        android:elevation=\"2dp\" />\r\n\r\n    <!-- Bottom Info Card -->\r\n    <com.google.android.material.card.MaterialCardView\r\n        android:id=\"@+id/bottomCard\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"120dp\"\r\n        android:layout_gravity=\"bottom\"\r\n        android:layout_margin=\"16dp\"\r\n        app:cardCornerRadius=\"16dp\"\r\n        app:cardElevation=\"6dp\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:padding=\"16dp\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/restaurantName\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Restaurant Name\"\r\n                android:textStyle=\"bold\"\r\n                android:textSize=\"18sp\"\r\n                android:textColor=\"#000\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/restaurantAddress\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Address will appear here\"\r\n                android:textColor=\"#555\"\r\n                android:textSize=\"14sp\"\r\n                android:layout_marginTop=\"4dp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/restaurantRating\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"⭐ 4.5\"\r\n                android:textColor=\"#FF7043\"\r\n                android:textSize=\"14sp\"\r\n                android:layout_marginTop=\"8dp\" />\r\n        </LinearLayout>\r\n    </com.google.android.material.card.MaterialCardView>\r\n\r\n</androidx.coordinatorlayout.widget.CoordinatorLayout>\r\n
+===================================================================
+diff --git a/app/src/main/res/layout/activity_map.xml b/app/src/main/res/layout/activity_map.xml
+--- a/app/src/main/res/layout/activity_map.xml	(revision 07e4fa3fd4cc5900840dcce95d15b65c3c78ea7b)
++++ b/app/src/main/res/layout/activity_map.xml	(date 1762132590512)
+@@ -1,110 +1,211 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:id="@+id/rootLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#FAFAFA">
++    android:background="#FFFFFF">
+ 
+-    <!-- Top App Bar -->
++    <!-- Top App Bar (same as home page) -->
+     <com.google.android.material.appbar.MaterialToolbar
+         android:id="@+id/topAppBar"
+-        android:layout_width="match_parent"
+-        android:layout_height="?attr/actionBarSize"
+-        android:backgroundTint="#FF7043"
+-        android:title="Find Restaurants Nearby"
+-        android:titleTextColor="@android:color/white"
+-        app:navigationIcon="@drawable/ic_baseline_arrow_back_24" />
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:background="#FFFFFF"
++        android:elevation="0dp"
++        android:paddingTop="8dp"
++        android:paddingBottom="8dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center_vertical"
++            android:orientation="horizontal"
++            android:paddingStart="8dp"
++            android:paddingEnd="8dp">
++
++            <!-- App Logo -->
++            <ImageView
++                android:id="@+id/appLogo"
++                android:layout_width="40dp"
++                android:layout_height="40dp"
++                android:src="@drawable/app_logo"
++                android:contentDescription="App logo" />
++
++            <View
++                android:layout_width="0dp"
++                android:layout_height="1dp"
++                android:layout_weight="1" />
++
++            <!-- List View Icon -->
++            <ImageButton
++                android:id="@+id/btnListView"
++                android:layout_width="48dp"
++                android:layout_height="48dp"
++                android:background="?attr/selectableItemBackgroundBorderless"
++                android:src="@drawable/ic_list"
++                android:contentDescription="List view"
++                android:padding="12dp" />
++
++            <!-- Map Icon (highlighted/active) -->
++            <ImageButton
++                android:id="@+id/btnMap"
++                android:layout_width="48dp"
++                android:layout_height="48dp"
++                android:layout_marginStart="4dp"
++                android:src="@drawable/ic_map"
++                android:contentDescription="Map view"
++                android:padding="12dp" />
++
++            <!-- Cart Icon -->
++            <ImageButton
++                android:id="@+id/btnCart"
++                android:layout_width="48dp"
++                android:layout_height="48dp"
++                android:layout_marginStart="4dp"
++                android:background="?attr/selectableItemBackgroundBorderless"
++                android:src="@drawable/ic_cart"
++                android:contentDescription="Shopping cart"
++                android:padding="12dp" />
++
++            <!-- Account Icon -->
++            <ImageButton
++                android:id="@+id/btnAccount"
++                android:layout_width="48dp"
++                android:layout_height="48dp"
++                android:layout_marginStart="4dp"
++                android:background="?attr/selectableItemBackgroundBorderless"
++                android:src="@drawable/ic_account"
++                android:contentDescription="Account"
++                android:padding="12dp" />
++
++        </LinearLayout>
++
++    </com.google.android.material.appbar.MaterialToolbar>
++
++    <!-- Divider -->
++    <View
++        android:id="@+id/divider"
++        android:layout_width="0dp"
++        android:layout_height="1dp"
++        android:background="#F0F0F0"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/topAppBar" />
+ 
+     <!-- Search Bar -->
+-    <LinearLayout
+-        android:id="@+id/searchContainer"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_margin="16dp"
+-        android:layout_marginTop="16dp"
+-        android:orientation="horizontal"
+-        android:background="@drawable/search_background"
+-        android:padding="8dp"
+-        app:layout_anchor="@id/topAppBar"
+-        app:layout_anchorGravity="bottom">
++    <androidx.cardview.widget.CardView
++        android:id="@+id/searchCard"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="16dp"
++        android:layout_marginEnd="16dp"
++        app:cardCornerRadius="12dp"
++        app:cardElevation="2dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/divider">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center_vertical"
++            android:orientation="horizontal"
++            android:padding="4dp">
+ 
+-        <!-- Image Placeholder -->
+-        <ImageView
+-            android:layout_width="24dp"
+-            android:layout_height="24dp"
+-            android:src="@android:drawable/ic_menu_search"
+-            app:tint="#757575"
+-            android:layout_gravity="center_vertical" />
++            <ImageView
++                android:layout_width="40dp"
++                android:layout_height="40dp"
++                android:padding="10dp"
++                android:src="@drawable/ic_search"
++                android:contentDescription="Search icon"
++                app:tint="#757575" />
+ 
+-        <EditText
+-            android:id="@+id/searchEditText"
+-            android:layout_width="0dp"
+-            android:layout_height="wrap_content"
+-            android:layout_weight="1"
+-            android:hint="Search for restaurants..."
+-            android:paddingStart="8dp"
+-            android:background="@android:color/transparent"
+-            android:textColor="#212121"
+-            android:textSize="16sp" />
+-    </LinearLayout>
++            <EditText
++                android:id="@+id/searchEditText"
++                android:layout_width="0dp"
++                android:layout_height="48dp"
++                android:layout_weight="1"
++                android:background="@android:color/transparent"
++                android:hint="Search restaurants..."
++                android:inputType="text"
++                android:paddingStart="8dp"
++                android:paddingEnd="16dp"
++                android:textColorHint="#999999"
++                android:textSize="16sp" />
++
++        </LinearLayout>
+ 
+-    <!-- Placeholder Map Container -->
++    </androidx.cardview.widget.CardView>
++
++    <!-- Map Container -->
+     <FrameLayout
+-        android:id="@+id/mapPlaceholder"
+-        android:layout_width="match_parent"
+-        android:layout_height="0dp"
+-        android:layout_marginHorizontal="16dp"
+-        android:layout_marginTop="90dp"
+-        android:layout_marginBottom="120dp"
+-        android:background="@drawable/map_placeholder"
+-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+-        android:layout_gravity="center"
+-        android:elevation="2dp" />
+-
+-    <!-- Bottom Info Card -->
+-    <com.google.android.material.card.MaterialCardView
+-        android:id="@+id/bottomCard"
+-        android:layout_width="match_parent"
+-        android:layout_height="120dp"
+-        android:layout_gravity="bottom"
+-        android:layout_margin="16dp"
+-        app:cardCornerRadius="16dp"
+-        app:cardElevation="6dp">
+-
+-        <LinearLayout
++        android:id="@+id/mapContainer"
++        android:layout_width="0dp"
++        android:layout_height="250dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="16dp"
++        android:layout_marginEnd="16dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/searchCard">
++
++        <!-- Placeholder Map Image -->
++        <ImageView
++            android:id="@+id/mapPlaceholder"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+-            android:padding="16dp"
+-            android:orientation="vertical">
++            android:scaleType="centerCrop"
++            android:src="@drawable/map_placeholder"
++            android:contentDescription="Map view" />
+ 
+-            <TextView
+-                android:id="@+id/restaurantName"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Restaurant Name"
+-                android:textStyle="bold"
+-                android:textSize="18sp"
+-                android:textColor="#000" />
+-
+-            <TextView
+-                android:id="@+id/restaurantAddress"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="Address will appear here"
+-                android:textColor="#555"
+-                android:textSize="14sp"
+-                android:layout_marginTop="4dp" />
++        <!-- Map overlay text -->
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:background="#F0FFFFFF"
++            android:paddingStart="20dp"
++            android:paddingEnd="20dp"
++            android:paddingTop="12dp"
++            android:paddingBottom="12dp"
++            android:text="🗺️ Map View"
++            android:textColor="#666666"
++            android:textSize="16sp"
++            android:textStyle="bold" />
+ 
+-            <TextView
+-                android:id="@+id/restaurantRating"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:text="⭐ 4.5"
+-                android:textColor="#FF7043"
+-                android:textSize="14sp"
+-                android:layout_marginTop="8dp" />
+-        </LinearLayout>
+-    </com.google.android.material.card.MaterialCardView>
++    </FrameLayout>
++
++    <!-- Nearby Restaurants Title -->
++    <TextView
++        android:id="@+id/nearbyTitle"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="24dp"
++        android:layout_marginTop="16dp"
++        android:layout_marginEnd="24dp"
++        android:text="Nearby Restaurants"
++        android:textColor="#1A1A1A"
++        android:textSize="20sp"
++        android:textStyle="bold"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/mapContainer" />
+ 
+-</androidx.coordinatorlayout.widget.CoordinatorLayout>
++    <!-- Restaurant List -->
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/recyclerView"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
++        android:layout_marginTop="8dp"
++        android:clipToPadding="false"
++        android:paddingBottom="16dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/nearbyTitle" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
