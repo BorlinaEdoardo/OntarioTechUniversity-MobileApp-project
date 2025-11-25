@@ -160,6 +160,7 @@
                 android:layout_height="40dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_mic"
+                android:backgroundTint="@color/white"
                 android:contentDescription="Mic icon"
                 app:tint="#757575"
                 />
