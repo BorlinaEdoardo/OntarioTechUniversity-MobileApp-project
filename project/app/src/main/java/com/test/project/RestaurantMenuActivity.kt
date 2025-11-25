@@ -71,7 +71,6 @@ class RestaurantMenuActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         dishAdapter = DishAdapter(emptyList()) { dish ->
-            // Dish click - add to order
             addDishToOrder(dish)
         }
 
@@ -120,19 +119,8 @@ class RestaurantMenuActivity : AppCompatActivity() {
         val success = databaseHelper.addDishToOrder(orderId, dishId)
 
         if (success) {
-            // Show success dialog
-            AlertDialog.Builder(this)
-                .setTitle("Added to Order")
-                .setMessage("${dish.name} has been added to your order!")
-                .setPositiveButton("OK", null)
-                .setNeutralButton("View Order") { _, _ ->
-                    // Navigate to order detail
-                    val intent = android.content.Intent(this, OrderDetailActivity::class.java)
-                    intent.putExtra("ORDER_ID", orderId)
-                    intent.putExtra("RESTAURANT_ID", restaurantId)
-                    startActivity(intent)
-                }
-                .show()
+            Toast.makeText(this, "${dish.name} added to your order", Toast.LENGTH_SHORT).show()
+
         } else {
             Toast.makeText(this, "Failed to add item to order", Toast.LENGTH_SHORT).show()
         }

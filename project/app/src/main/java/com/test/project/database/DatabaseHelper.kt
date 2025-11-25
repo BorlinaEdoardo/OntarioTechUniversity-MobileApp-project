@@ -623,10 +623,8 @@ class DatabaseHelper(
 
         // If no order exists, create one
         if (orderId == null) {
-            val orderValues = android.content.ContentValues().apply {
-                put("userId", userId)
-                put("restaurantId", restaurantId)
-            }
+            val orderValues = Order(userId = userId, restaurantId = restaurantId)
+                .toContentValues()
             val newOrderId = db.insert("orders", null, orderValues)
             orderId = if (newOrderId != -1L) newOrderId.toInt() else null
         }

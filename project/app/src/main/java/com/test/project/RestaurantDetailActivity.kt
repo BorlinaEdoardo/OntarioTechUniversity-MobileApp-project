@@ -12,6 +12,8 @@ import android.widget.Toast
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.VideoView
+import android.widget.MediaController
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -32,8 +34,11 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
     // Media elements
     private lateinit var videoView: VideoView
+    private lateinit var videoContainer: FrameLayout
+    private lateinit var noVideoText: TextView
     private lateinit var imageView1: ImageView
     private lateinit var imageView2: ImageView
+    private var mediaController: MediaController? = null
 
     // Request codes for media picker
     private val REQUEST_VIDEO = 100
@@ -66,8 +71,19 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         // Media elements
         videoView = findViewById(R.id.restaurantVideoView)
+        videoContainer = findViewById(R.id.videoContainer)
+        noVideoText = findViewById(R.id.noVideoText)
         imageView1 = findViewById(R.id.restaurantImage1)
         imageView2 = findViewById(R.id.restaurantImage2)
+
+        // Setup MediaController for video playback
+        mediaController = MediaController(this)
+        mediaController?.setAnchorView(videoContainer)
+        videoView.setMediaController(mediaController)
+
+        // Force VideoView to be visible and in front
+        videoView.setZOrderOnTop(false)
+        videoView.setZOrderMediaOverlay(false)
 
         val uploadVideoButton: Button = findViewById(R.id.uploadVideoButton)
         val uploadImage1Button: Button = findViewById(R.id.uploadImage1Button)
@@ -89,15 +105,50 @@ class RestaurantDetailActivity : AppCompatActivity() {
             // Load saved media
             restaurant.videoUri?.let { uriString ->
                 try {
+                    android.util.Log.d("RestaurantDetail", "Loading video URI: $uriString")
                     val uri = Uri.parse(uriString)
+                    noVideoText.visibility = android.view.View.GONE
+
                     videoView.setVideoURI(uri)
                     videoView.setOnPreparedListener { mp ->
+                        android.util.Log.d("RestaurantDetail", "Video prepared - Width: ${mp.videoWidth}, Height: ${mp.videoHeight}")
                         mp.isLooping = true
+                        mp.start()
+                        android.util.Log.d("RestaurantDetail", "Video started playing")
                     }
-                    videoView.start()
+
+                    videoView.setOnErrorListener { mp, what, extra ->
+                        android.util.Log.e("RestaurantDetail", "Video error - what: $what, extra: $extra")
+                        runOnUiThread {
+                            noVideoText.visibility = android.view.View.VISIBLE
+                            noVideoText.text = "Error loading video"
+                            Toast.makeText(this, "Error playing video (code: $what)", Toast.LENGTH_SHORT).show()
+                        }
+                        true // Return true to indicate we handled the error
+                    }
+
+                    videoView.setOnCompletionListener { mp ->
+                        android.util.Log.d("RestaurantDetail", "Video completed, restarting")
+                        mp.start() // Loop the video
+                    }
+
+                    videoView.setOnInfoListener { mp, what, extra ->
+                        android.util.Log.d("RestaurantDetail", "Video info - what: $what, extra: $extra")
+                        false
+                    }
+
                 } catch (e: Exception) {
+                    android.util.Log.e("RestaurantDetail", "Exception loading video", e)
                     e.printStackTrace()
+                    noVideoText.visibility = android.view.View.VISIBLE
+                    noVideoText.text = "Failed to load video"
+                    Toast.makeText(this, "Error loading video: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
+            } ?: run {
+                android.util.Log.d("RestaurantDetail", "No video URI found")
+                // No video uploaded
+                noVideoText.visibility = android.view.View.VISIBLE
+                noVideoText.text = "No video uploaded yet"
             }
 
             restaurant.image1Uri?.let { uriString ->
@@ -304,11 +355,36 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
                 when (requestCode) {
                     REQUEST_VIDEO -> {
+                        android.util.Log.d("RestaurantDetail", "New video selected: $uri")
+                        noVideoText.visibility = android.view.View.GONE
+
                         videoView.setVideoURI(uri)
                         videoView.setOnPreparedListener { mp ->
+                            android.util.Log.d("RestaurantDetail", "New video prepared - Width: ${mp.videoWidth}, Height: ${mp.videoHeight}")
                             mp.isLooping = true
+                            mp.start()
+                            android.util.Log.d("RestaurantDetail", "New video started playing")
                         }
-                        videoView.start()
+
+                        videoView.setOnErrorListener { mp, what, extra ->
+                            android.util.Log.e("RestaurantDetail", "New video error - what: $what, extra: $extra")
+                            runOnUiThread {
+                                noVideoText.visibility = android.view.View.VISIBLE
+                                noVideoText.text = "Error loading video"
+                                Toast.makeText(this, "Error playing video (code: $what)", Toast.LENGTH_SHORT).show()
+                            }
+                            true
+                        }
+
+                        videoView.setOnCompletionListener { mp ->
+                            android.util.Log.d("RestaurantDetail", "New video completed, restarting")
+                            mp.start() // Loop the video
+                        }
+
+                        videoView.setOnInfoListener { mp, what, extra ->
+                            android.util.Log.d("RestaurantDetail", "New video info - what: $what, extra: $extra")
+                            false
+                        }
 
                         // Save to database
                         val success = databaseHelper.updateRestaurantMedia(
@@ -401,5 +477,25 @@ class RestaurantDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Some permissions were denied. Media features may not work.", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (::videoView.isInitialized) {
+            videoView.pause()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Video will auto-resume if it was playing
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::videoView.isInitialized) {
+            videoView.stopPlayback()
+        }
+        mediaController = null
     }
 }

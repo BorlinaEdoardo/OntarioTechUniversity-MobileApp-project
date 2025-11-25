@@ -60,7 +60,7 @@ class OrderDetailActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         orderElementAdapter = OrderElementAdapter(mutableListOf()) { dish, position ->
-            showDeleteConfirmDialog(dish, position)
+            deleteOrderItem(dish, position)
         }
 
         orderItemsRecyclerView.apply {
@@ -76,17 +76,6 @@ class OrderDetailActivity : AppCompatActivity() {
 
         orderElementAdapter.updateDishes(dishes)
         updateTotal(dishes)
-    }
-
-    private fun showDeleteConfirmDialog(dish: Dish, position: Int) {
-        AlertDialog.Builder(this)
-            .setTitle("Remove Item")
-            .setMessage("Remove ${dish.name} from your order?")
-            .setPositiveButton("Remove") { _, _ ->
-                deleteOrderItem(dish, position)
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
     }
 
     private fun deleteOrderItem(dish: Dish, position: Int) {
