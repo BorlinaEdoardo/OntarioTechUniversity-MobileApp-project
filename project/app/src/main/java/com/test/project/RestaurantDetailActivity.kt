@@ -99,22 +99,21 @@ class RestaurantDetailActivity : AppCompatActivity() {
         // Display restaurant information
         currentRestaurant?.let { restaurant ->
             restaurantDescriptionTextView.text = restaurant.description ?: "No description available"
-            restaurantAddressTextView.text = "📍 ${restaurant.address}"
-            restaurantPhoneTextView.text = "📞 ${restaurant.phoneNumber}"
+            restaurantAddressTextView.text = "address: ${restaurant.address}"
+            restaurantPhoneTextView.text = "phone: ${restaurant.phoneNumber}"
 
             // Load saved media
             restaurant.videoUri?.let { uriString ->
                 try {
-                    android.util.Log.d("RestaurantDetail", "Loading video URI: $uriString")
                     val uri = Uri.parse(uriString)
                     noVideoText.visibility = android.view.View.GONE
 
                     videoView.setVideoURI(uri)
                     videoView.setOnPreparedListener { mp ->
-                        android.util.Log.d("RestaurantDetail", "Video prepared - Width: ${mp.videoWidth}, Height: ${mp.videoHeight}")
+                        // android.util.Log.d("RestaurantDetail", "Video prepared - Width: ${mp.videoWidth}, Height: ${mp.videoHeight}")
                         mp.isLooping = true
                         mp.start()
-                        android.util.Log.d("RestaurantDetail", "Video started playing")
+                        // android.util.Log.d("RestaurantDetail", "Video started playing")
                     }
 
                     videoView.setOnErrorListener { mp, what, extra ->
@@ -124,16 +123,16 @@ class RestaurantDetailActivity : AppCompatActivity() {
                             noVideoText.text = "Error loading video"
                             Toast.makeText(this, "Error playing video (code: $what)", Toast.LENGTH_SHORT).show()
                         }
-                        true // Return true to indicate we handled the error
+                        true
                     }
 
                     videoView.setOnCompletionListener { mp ->
-                        android.util.Log.d("RestaurantDetail", "Video completed, restarting")
-                        mp.start() // Loop the video
+                        //android.util.Log.d("RestaurantDetail", "Video completed, restarting")
+                        mp.start()
                     }
 
                     videoView.setOnInfoListener { mp, what, extra ->
-                        android.util.Log.d("RestaurantDetail", "Video info - what: $what, extra: $extra")
+                        //android.util.Log.d("RestaurantDetail", "Video info - what: $what, extra: $extra")
                         false
                     }
 
@@ -234,7 +233,6 @@ class RestaurantDetailActivity : AppCompatActivity() {
                 val reviews = databaseHelper.getReviewsForRestaurant(restaurantId)
                 reviewAdapter.updateReviews(reviews)
             } else {
-                // Restaurant doesn't have an ID (shouldn't happen with existing restaurants)
                 Toast.makeText(this, "Unable to load reviews for this restaurant", Toast.LENGTH_SHORT).show()
             }
         }
@@ -255,7 +253,6 @@ class RestaurantDetailActivity : AppCompatActivity() {
         val ratingBar: RatingBar = dialogView.findViewById(R.id.dialogRatingBar)
         val commentEditText: EditText = dialogView.findViewById(R.id.commentEditText)
 
-        // Pre-fill with existing review if available
         existingReview?.let { review ->
             ratingBar.rating = review.rating
             commentEditText.setText(review.comment)
@@ -283,7 +280,7 @@ class RestaurantDetailActivity : AppCompatActivity() {
                     Toast.makeText(this,
                         if (existingReview != null) "Review updated successfully" else "Review added successfully",
                         Toast.LENGTH_SHORT).show()
-                    loadReviews() // Refresh the reviews list
+                    loadReviews()
 
                     // Reload restaurant data to get updated rating
                     currentRestaurant = databaseHelper.getRestaurantByName(restaurant.name)
