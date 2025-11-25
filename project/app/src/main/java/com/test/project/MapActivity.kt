@@ -40,6 +40,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var searchEditText: EditText
     private val markerList = mutableListOf<Pair<Restaurant, LatLng>>()
 
+    private fun showBottomCard(restaurant: Restaurant) {
+        bottomCard.visibility = View.VISIBLE
+        restaurantName.text = restaurant.name
+        restaurantAddress.text = restaurant.address
+        restaurantRating.text = "⭐ ${String.format("%.1f", restaurant.rating ?: 0f)}"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -150,22 +157,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-
         map.setOnMarkerClickListener { marker ->
             val restaurant = marker.tag as? Restaurant
-            restaurant?.let { r ->
-                bottomCard.visibility = View.VISIBLE
-                restaurantName.text = r.name
-                restaurantAddress.text = r.address
-                restaurantRating.text = "⭐ ${String.format("%.1f", r.rating ?: 0f)}"
-            }
+            restaurant?.let { showBottomCard(it) }
 
             map.animateCamera(CameraUpdateFactory.newLatLng(marker.position))
             true
         }
-
-
-
 
         // Zoom buttons
         zoomInButton.setOnClickListener { map.animateCamera(CameraUpdateFactory.zoomIn()) }
